@@ -13,6 +13,7 @@ import org.springframework.web.client.RestClient;
 import com.example.spotify_app.config.SpotifyConfig;
 import com.example.spotify_app.model.SpotifyTokenResponse;
 import com.example.spotify_app.service.TokenStore;
+import com.example.spotify_app.service.TokenService;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -22,15 +23,17 @@ import java.nio.charset.StandardCharsets;
 @RequestMapping("/auth")
 public class SpotifyOAuthController {
     private final TokenStore tokenStore;
+    private final TokenService tokenService;
     private final SpotifyConfig spotifyConfig;
 
-    public SpotifyOAuthController(TokenStore tokenStore, SpotifyConfig spotifyConfig) {
+    public SpotifyOAuthController(TokenStore tokenStore, TokenService tokenService, SpotifyConfig spotifyConfig) {
         this.spotifyConfig = spotifyConfig;
         this.tokenStore = tokenStore;
+        this.tokenService = tokenService;
     }
 
     @GetMapping("/spotify")
-    public ResponseEntity<Void> SpotifyOAuth(){
+    public ResponseEntity<Void> SpotifyOAuth() {
         String url = spotifyConfig.getAuthorizeUrl() +
                 "?client_id=" + spotifyConfig.getClientId() +
                 "&response_type=code" +
@@ -43,7 +46,7 @@ public class SpotifyOAuthController {
     }
 
     @GetMapping("/spotify/callback")
-    public ResponseEntity<String> SpotifyCallback(@RequestParam("code") String code) {
+    public ResponseEntity<Void> SpotifyCallback(@RequestParam("code") String code) {
         RestClient restClient = RestClient.create();
 
         String auth = spotifyConfig.getClientId() + ":" + spotifyConfig.getClientSecret();
@@ -53,28 +56,35 @@ public class SpotifyOAuthController {
 
         try {
             SpotifyTokenResponse tokenBody = restClient.post()
-                .uri(spotifyConfig.getTokenUrl())
-                .header("Authorization", "Basic " + encodedAuth)
-                .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                .body(body)
-                .retrieve()
-                .body(SpotifyTokenResponse.class);
+                    .uri(spotifyConfig.getTokenUrl())
+                    .header("Authorization", "Basic " + encodedAuth)
+                    .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                    .body(body)
+                    .retrieve()
+                    .body(SpotifyTokenResponse.class);
 
             if (tokenBody != null) {
                 tokenStore.saveToken(spotifyConfig.getUserIdDev(), tokenBody);
-                return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(tokenBody.toString());
+                String redirectUrl = "http://localhost:9090/auth/callback?access_token=" + tokenBody.getAccessToken();
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .location(URI.create(redirectUrl))
+                        .build();
             } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Failed to retrieve token from Spotify.");
+                String errorUrl = "http://localhost:9090/login?error=failed_to_retrieve_token";
+                return ResponseEntity.status(HttpStatus.FOUND)
+                        .location(URI.create(errorUrl))
+                        .build();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error during Spotify OAuth callback: " + e.getMessage());
+            String errorUrl = "http://localhost:9090/login?error="
+                    + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create(errorUrl))
+                    .build();
         }
     }
 
-    // Endpoint to retrieve the Spotify token, using an ID
     @GetMapping("/spotify/token")
     public ResponseEntity<SpotifyTokenResponse> getSpotifyTokenByUserId(@RequestParam String userId) {
         SpotifyTokenResponse tokenResponse = tokenStore.getToken(userId);
@@ -86,4 +96,20 @@ public class SpotifyOAuthController {
         }
     }
 
+    @GetMapping("/spotify/refresh")
+    public ResponseEntity<SpotifyTokenResponse> refreshToken(@RequestParam String userId) {
+        boolean refreshed = tokenService.refreshToken(userId);
+        if (refreshed) {
+            SpotifyTokenResponse tokenResponse = tokenStore.getToken(userId);
+            return ResponseEntity.ok(tokenResponse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        tokenStore.removeToken(spotifyConfig.getUserIdDev());
+        return ResponseEntity.ok().build();
+    }
 }

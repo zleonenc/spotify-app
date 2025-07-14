@@ -18,4 +18,8 @@ public class TokenStore {
     public SpotifyTokenResponse getToken(String userId) {
         return tokenStore.get(userId);
     }
+
+    public void removeToken(String userId) {
+        tokenStore.remove(userId);
+    }
 }
