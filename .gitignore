@@ -40,3 +40,6 @@ build/
 *.vscode/
 
 .env
+
+backend/src/main/resources/application-secrets.properties
+backend/src/main/resources/application-secrets.properties
