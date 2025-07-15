@@ -1,11 +1,11 @@
 package com.example.spotify_app.service;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.springframework.stereotype.Component;
 
-import com.example.spotify_app.model.SpotifyTokenResponse;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+
+import com.example.spotify_app.model.SpotifyTokenResponse;
 
 @Component
 public class TokenStore {

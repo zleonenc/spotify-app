@@ -2,6 +2,17 @@ package com.example.spotify_app.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import com.example.spotify_app.model.common.ExternalUrls;
+import com.example.spotify_app.model.common.Followers;
+import com.example.spotify_app.model.common.Image;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Artist {
     @JsonProperty("id")
     private String id;
@@ -18,56 +29,20 @@ public class Artist {
     @JsonProperty("genres")
     private String[] genres;
 
-    public Artist() {
-    }
+    @JsonProperty("external_urls")
+    private ExternalUrls externalUrls;
 
-    public Artist(String id, String name, int popularity, Followers followers, String[] genres) {
-        this.id = id;
-        this.name = name;
-        this.popularity = popularity;
-        this.followers = followers;
-        this.genres = genres;
-    }
+    @JsonProperty("href")
+    private String href;
 
-    public String getId() {
-        return id;
-    }
+    @JsonProperty("images")
+    private Image[] images;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    @JsonProperty("type")
+    private String type;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getPopularity() {
-        return popularity;
-    }
-
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
-    }
-
-    public Followers getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(Followers followers) {
-        this.followers = followers;
-    }
-
-    public String[] getGenres() {
-        return genres;
-    }
-
-    public void setGenres(String[] genres) {
-        this.genres = genres;
-    }
+    @JsonProperty("uri")
+    private String uri;
 
     @Override
     public String toString() {
@@ -77,31 +52,11 @@ public class Artist {
                 ", popularity=" + popularity +
                 ", followers=" + followers +
                 ", genres=" + java.util.Arrays.toString(genres) +
+                ", externalUrls=" + externalUrls +
+                ", href='" + href + '\'' +
+                ", images=" + java.util.Arrays.toString(images) +
+                ", type='" + type + '\'' +
+                ", uri='" + uri + '\'' +
                 '}';
-    }
-
-    public static class Followers {
-        @JsonProperty("total")
-        private int total;
-
-        public Followers() {
-        }
-
-        public Followers(int total) {
-            this.total = total;
-        }
-
-        public int getTotal() {
-            return total;
-        }
-
-        public void setTotal(int total) {
-            this.total = total;
-        }
-
-        @Override
-        public String toString() {
-            return "Followers{total=" + total + '}';
-        }
     }
 }

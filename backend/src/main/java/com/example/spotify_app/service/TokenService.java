@@ -2,6 +2,9 @@ package com.example.spotify_app.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import com.example.spotify_app.config.SpotifyConfig;
 import com.example.spotify_app.model.SpotifyTokenResponse;
@@ -63,6 +66,51 @@ public class TokenService {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public <T> ResponseEntity<T> makeRequest(String userId, String apiEndpoint, Class<T> responseType) {
+        String accessToken = getValidAccessToken(userId);
+        if (accessToken == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        RestClient restClient = RestClient.create();
+        String fullUrl = spotifyConfig.getApiUrl() + apiEndpoint;
+
+        try {
+            T response = restClient.get()
+                    .uri(fullUrl)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .retrieve()
+                    .body(responseType);
+
+            return ResponseEntity.ok(response);
+
+        } catch (HttpClientErrorException.Unauthorized e) {
+            boolean refreshed = refreshToken(userId);
+
+            if (refreshed) {
+                String newAccessToken = getValidAccessToken(userId);
+                if (newAccessToken != null) {
+                    try {
+                        T response = restClient.get()
+                                .uri(fullUrl)
+                                .header("Authorization", "Bearer " + newAccessToken)
+                                .retrieve()
+                                .body(responseType);
+
+                        return ResponseEntity.ok(response);
+                    } catch (Exception retryException) {
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                    }
+                }
+            }
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import AuthCallback from './pages/AuthCallback'
 import Dashboard from './pages/Dashboard'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { AuthProvider, useAuth, SpotifyTopArtistsProvider, ProfileProvider } from './context'
 
 function AppRoutes() {
     const { isAuthenticated } = useAuth();
@@ -47,9 +47,13 @@ function AppRoutes() {
 function App() {
     return (
         <AuthProvider>
-            <BrowserRouter>
-                <AppRoutes />
-            </BrowserRouter>
+            <ProfileProvider>
+                <SpotifyTopArtistsProvider>
+                    <BrowserRouter>
+                        <AppRoutes />
+                    </BrowserRouter>
+                </SpotifyTopArtistsProvider>
+            </ProfileProvider>
         </AuthProvider>
     );
 }

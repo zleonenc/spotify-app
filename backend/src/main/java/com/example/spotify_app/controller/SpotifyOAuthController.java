@@ -5,31 +5,33 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.client.RestClient;
-
-import com.example.spotify_app.config.SpotifyConfig;
-import com.example.spotify_app.model.SpotifyTokenResponse;
-import com.example.spotify_app.service.TokenStore;
-import com.example.spotify_app.service.TokenService;
 
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import com.example.spotify_app.config.SpotifyConfig;
+import com.example.spotify_app.service.TokenStore;
+import com.example.spotify_app.service.UserIdGenerator;
+import com.example.spotify_app.model.SpotifyTokenResponse;
+
 @RestController
 @RequestMapping("/auth")
 public class SpotifyOAuthController {
     private final TokenStore tokenStore;
-    private final TokenService tokenService;
     private final SpotifyConfig spotifyConfig;
+    private final UserIdGenerator userIdGenerator;
 
-    public SpotifyOAuthController(TokenStore tokenStore, TokenService tokenService, SpotifyConfig spotifyConfig) {
+    public SpotifyOAuthController(TokenStore tokenStore,
+            SpotifyConfig spotifyConfig, UserIdGenerator userIdGenerator) {
         this.spotifyConfig = spotifyConfig;
         this.tokenStore = tokenStore;
-        this.tokenService = tokenService;
+        this.userIdGenerator = userIdGenerator;
     }
 
     @GetMapping("/spotify")
@@ -64,13 +66,16 @@ public class SpotifyOAuthController {
                     .body(SpotifyTokenResponse.class);
 
             if (tokenBody != null) {
-                tokenStore.saveToken(spotifyConfig.getUserIdDev(), tokenBody);
-                String redirectUrl = "http://localhost:9090/auth/callback?access_token=" + tokenBody.getAccessToken();
+                String generatedUserId = userIdGenerator.generateUserId();
+
+                tokenStore.saveToken(generatedUserId, tokenBody);
+
+                String redirectUrl = "http://localhost:9090/auth/callback?user_id=" + generatedUserId;
                 return ResponseEntity.status(HttpStatus.FOUND)
                         .location(URI.create(redirectUrl))
                         .build();
             } else {
-                String errorUrl = "http://localhost:9090/login?error=failed_to_retrieve_token";
+                String errorUrl = "http://localhost:9090/login?error=failed_to_retrieve_userId";
                 return ResponseEntity.status(HttpStatus.FOUND)
                         .location(URI.create(errorUrl))
                         .build();
@@ -85,31 +90,10 @@ public class SpotifyOAuthController {
         }
     }
 
-    @GetMapping("/spotify/token")
-    public ResponseEntity<SpotifyTokenResponse> getSpotifyTokenByUserId(@RequestParam String userId) {
-        SpotifyTokenResponse tokenResponse = tokenStore.getToken(userId);
-        if (tokenResponse != null) {
-            return ResponseEntity.ok(tokenResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
-        }
-    }
-
-    @GetMapping("/spotify/refresh")
-    public ResponseEntity<SpotifyTokenResponse> refreshToken(@RequestParam String userId) {
-        boolean refreshed = tokenService.refreshToken(userId);
-        if (refreshed) {
-            SpotifyTokenResponse tokenResponse = tokenStore.getToken(userId);
-            return ResponseEntity.ok(tokenResponse);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
-
-    @GetMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        tokenStore.removeToken(spotifyConfig.getUserIdDev());
+    @DeleteMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authorization) {
+        String userId = authorization.replace("Bearer ", "");
+        tokenStore.removeToken(userId);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,25 +1,24 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-
+import { useAuth } from "../context";
 
 const AuthCallback = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { setAccessToken } = useAuth();
+    const { setUserId } = useAuth();
 
     useEffect(() => {
-        const token = searchParams.get("access_token");
+        const userId = searchParams.get("user_id");
 
-        if (token) {
-            setAccessToken(token);
-            localStorage.setItem("accessToken", token);
+        if (userId) {
+            setUserId(userId);
+            localStorage.setItem("userId", userId);
             navigate("/dashboard");
         } else {
-            console.error("No access token found in the URL");
+            console.error("No user ID found in the URL");
             navigate("/login");
         }
-    }, [searchParams, setAccessToken, navigate]);
+    }, [searchParams, setUserId, navigate]);
 
     return (
         <div>
