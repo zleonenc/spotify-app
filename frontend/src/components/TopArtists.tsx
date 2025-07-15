@@ -1,67 +1,8 @@
-import { useEffect, useState } from 'react';
 import { Box, Typography, CircularProgress, Alert } from '@mui/material';
-import { useAuth } from '../context/AuthContext';
-import apiClient from '../services/axios';
-
-interface Artist {
-    id: string;
-    name: string;
-    popularity: number;
-    followers: {
-        total: number;
-    };
-    genres: string[];
-}
-
-interface SpotifyArtistsResponse {
-    items: Artist[];
-    total: number;
-    limit: number;
-    offset: number;
-}
+import { useSpotifyTopArtists } from '../context';
 
 const TopArtists = () => {
-    const { accessToken, logout } = useAuth();
-    const [artists, setArtists] = useState<Artist[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const fetchTopArtists = async () => {
-            if (!accessToken) {
-                setError('No access token available');
-                setLoading(false);
-                return;
-            }
-
-            try {
-                setLoading(true);
-                setError(null);
-
-                const response = await apiClient.get('/api/me/top/artists', {
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`
-                    }
-                });
-
-                const data: SpotifyArtistsResponse = response.data;
-                setArtists(data.items || []);
-            } catch (err: any) {
-                console.error('Error fetching top artists:', err);
-                
-                if (err.response?.status === 401) {
-                    logout();
-                    setError('Session expired. Please log in again.');
-                } else {
-                    setError('Failed to load top artists. Please try again.');
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchTopArtists();
-    }, [accessToken, logout]);
+    const { artists, loading, error } = useSpotifyTopArtists();
 
     if (loading) {
         return (

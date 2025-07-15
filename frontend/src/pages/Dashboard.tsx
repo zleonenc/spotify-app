@@ -1,6 +1,7 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context';
 import TopArtists from '../components/TopArtists';
+import Profile from '../components/Profile';
 
 const Dashboard = () => {
     const { logout } = useAuth();
@@ -22,6 +23,10 @@ const Dashboard = () => {
                 >
                     Logout
                 </Button>
+            </Box>
+            
+            <Box sx={{ mt: 4 }}>
+                <Profile />
             </Box>
             
             <Box sx={{ mt: 4 }}>

@@ -1,0 +1,23 @@
+package com.example.spotify_app.model.common;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Followers {
+    @JsonProperty("href")
+    private String href;
+
+    @JsonProperty("total")
+    private int total;
+
+    @Override
+    public String toString() {
+        return "Followers{href='" + href + '\'' + ", total=" + total + '}';
+    }
+}

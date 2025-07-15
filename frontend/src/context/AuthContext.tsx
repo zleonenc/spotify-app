@@ -1,44 +1,43 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import apiClient from '../services/axios';
-
-interface AuthContextType {
-    accessToken: string | null;
-    setAccessToken: (token: string | null) => void;
-    isAuthenticated: boolean;
-    logout: () => void;
-}
+import type { AuthContextType } from '../types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [accessToken, setAccessTokenState] = useState<string | null>(
-        localStorage.getItem('accessToken')
+    const [userId, setUserIdState] = useState<string | null>(
+        localStorage.getItem('userId')
     );
 
-    const setAccessToken = (token: string | null) => {
-        setAccessTokenState(token);
-        if (token) {
-            localStorage.setItem('accessToken', token);
+    const setUserId = (id: string | null) => {
+        setUserIdState(id);
+        if (id) {
+            localStorage.setItem('userId', id);
         } else {
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem('userId');
         }
     };
 
-    const isAuthenticated = !!accessToken;
+    const isAuthenticated = !!userId;
 
     const logout = async () => {
-        try {
-            await apiClient.get('/auth/logout');
-        } catch (error) {
-            console.error('Error during logout:', error);
-        } finally {
-            setAccessToken(null);
+        if (userId) {
+            try {
+                await apiClient.delete('/api/auth/logout', {
+                    headers: {
+                        'Authorization': `Bearer ${userId}`
+                    }
+                });
+            } catch (error) {
+                console.error('Error during logout:', error);
+            }
         }
+        setUserId(null);
     };
 
     const value = {
-        accessToken,
-        setAccessToken,
+        userId,
+        setUserId,
         isAuthenticated,
         logout,
     };
