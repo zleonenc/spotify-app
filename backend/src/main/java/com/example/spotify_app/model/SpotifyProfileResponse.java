@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 import com.example.spotify_app.model.common.ExternalUrls;
 import com.example.spotify_app.model.common.Followers;
 import com.example.spotify_app.model.common.Image;
@@ -35,7 +33,7 @@ public class SpotifyProfileResponse {
     private Followers followers;
 
     @JsonProperty("images")
-    private List<Image> images;
+    private Image[] images;
 
     @JsonProperty("external_urls")
     private ExternalUrls externalUrls;

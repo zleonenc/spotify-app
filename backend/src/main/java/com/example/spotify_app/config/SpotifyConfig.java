@@ -26,9 +26,6 @@ public class SpotifyConfig {
     @Value("${spotify.scopes}")
     private String scopes;
 
-    @Value("${spotify.user-id.dev}")
-    private String userIdDev;
-
     public String getClientId() {
         return this.clientId;
     }
@@ -55,10 +52,6 @@ public class SpotifyConfig {
 
     public String getScopes() {
         return this.scopes;
-    }
-
-    public String getUserIdDev() {
-        return this.userIdDev;
     }
 
 }
