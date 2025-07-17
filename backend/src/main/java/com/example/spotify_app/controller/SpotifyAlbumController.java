@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spotify_app.model.Album.Album;
 import com.example.spotify_app.service.TokenService;
-import com.example.spotify_app.model.Album;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController

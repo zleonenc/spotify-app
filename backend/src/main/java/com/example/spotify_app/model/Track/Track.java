@@ -1,6 +1,8 @@
-package com.example.spotify_app.model;
+package com.example.spotify_app.model.Track;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.spotify_app.model.Album.Album;
+import com.example.spotify_app.model.Artist.Artist;
 import com.example.spotify_app.model.common.ExternalUrls;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

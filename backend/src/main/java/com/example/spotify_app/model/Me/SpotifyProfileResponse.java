@@ -1,4 +1,4 @@
-package com.example.spotify_app.model;
+package com.example.spotify_app.model.Me;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
