@@ -1,5 +1,3 @@
 export { AuthProvider, useAuth } from './AuthContext';
 
-export { SpotifyTopArtistsProvider, useSpotifyTopArtists } from './SpotifyTopArtistsContext';
-
-export { ProfileProvider, useProfile } from './ProfileContext';
+export { MeProvider, useMe } from './MeContext';

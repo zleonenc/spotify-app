@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useAuth } from '../context';
-import TopArtists from '../components/TopArtists';
-import Profile from '../components/Profile';
+import TopArtists from '../components/Profile/TopArtists';
+import Profile from '../components/Profile/Profile';
 
 const Dashboard = () => {
     const { logout } = useAuth();
@@ -16,19 +16,19 @@ const Dashboard = () => {
                 <Typography variant="h4" component="h1">
                     Spotify Dashboard
                 </Typography>
-                <Button 
-                    variant="outlined" 
-                    color="secondary" 
+                <Button
+                    variant="outlined"
+                    color="secondary"
                     onClick={handleLogout}
                 >
                     Logout
                 </Button>
             </Box>
-            
+
             <Box sx={{ mt: 4 }}>
                 <Profile />
             </Box>
-            
+
             <Box sx={{ mt: 4 }}>
                 <TopArtists />
             </Box>

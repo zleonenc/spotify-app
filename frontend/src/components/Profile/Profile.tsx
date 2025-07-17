@@ -1,10 +1,10 @@
 import { Box, Card, CardContent, Typography, CircularProgress } from '@mui/material';
-import { useProfile } from '../context';
+import { useMe } from '../../context';
 
 const Profile = () => {
-    const { profile, loading, error } = useProfile();
+    const { profile, profileLoading, profileError } = useMe();
 
-    if (loading) {
+    if (profileLoading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 200 }}>
                 <CircularProgress />
@@ -12,10 +12,10 @@ const Profile = () => {
         );
     }
 
-    if (error) {
+    if (profileError) {
         return (
             <Box sx={{ p: 2 }}>
-                <Typography color="error">{error}</Typography>
+                <Typography color="error">{profileError}</Typography>
             </Box>
         );
     }
@@ -34,7 +34,7 @@ const Profile = () => {
                 <Typography variant="h5" component="h2" gutterBottom>
                     Profile Information
                 </Typography>
-                
+
                 <Box sx={{ fontFamily: 'monospace', fontSize: '0.875rem', lineHeight: 1.6 }}>
                     <div><strong>ID:</strong> {profile.id}</div>
                     <div><strong>Display Name:</strong> {profile.display_name}</div>
@@ -44,7 +44,7 @@ const Profile = () => {
                     <div><strong>Followers:</strong> {profile.followers.total}</div>
                     {profile.followers.href && <div><strong>Followers Href:</strong> {profile.followers.href}</div>}
                     <div><strong>External URLs - Spotify:</strong> {profile.external_urls.spotify}</div>
-                    
+
                     {profile.images && profile.images.length > 0 && (
                         <>
                             <div><strong>Images:</strong></div>

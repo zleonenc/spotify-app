@@ -1,5 +1,8 @@
-export * from './auth';
+export * from './Common';
 
-export * from './SpotifyArtists';
+export * from './Album';
+export * from './Artist';
+export * from './Track';
+export * from './Me';
 
-export * from './SpotifyProfile';
+export * from './Search';
