@@ -30,4 +30,5 @@ export interface Track {
   track_number: number;
   type: string;
   uri: string;
+  explicit?: boolean;
 }
