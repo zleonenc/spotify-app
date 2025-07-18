@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
     Box,
     IconButton,
@@ -7,6 +8,7 @@ import {
     Typography,
     Badge
 } from '@mui/material';
+
 import {
     Tune as FilterIcon,
     MusicNote as TrackIcon,

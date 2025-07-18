@@ -1,14 +1,15 @@
 import { Container } from '@mui/material';
-import TopArtists from '../components/Profile/TopArtists';
-import Profile from '../components/Profile/Profile';
 
-const Dashboard = () => {
+import DashboardTopArtists from '../components/Dashboard/DashboardTopArtists';
+import DashboardTopTracks from '../components/Dashboard/DashboardTopTracks';
+
+const DashboardPage = () => {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Profile />
-            <TopArtists />
+            <DashboardTopArtists />
+            <DashboardTopTracks />
         </Container>
     );
 };
 
-export default Dashboard;
+export default DashboardPage;

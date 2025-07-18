@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
     Box,
     Typography,
@@ -9,11 +11,12 @@ import {
     ListItemText,
     Divider
 } from '@mui/material';
+
 import {
     AccountCircle as ProfileIcon,
     Logout as LogoutIcon
 } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+
 import { useAuth, useMe } from '../../context';
 
 const UserProfile = () => {

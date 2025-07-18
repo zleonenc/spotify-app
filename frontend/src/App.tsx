@@ -1,10 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+
 import { Box } from '@mui/material'
-import LoginPage from './pages/LoginPage'
-import AuthCallback from './pages/AuthCallback'
-import Dashboard from './pages/DashboardPage'
-import SearchPage from './pages/SearchPage'
+
 import { AuthProvider, useAuth, MeProvider, SearchProvider } from './context'
+
+import LoginPage from './pages/LoginPage'
+import DashboardPage from './pages/DashboardPage'
+import SearchPage from './pages/SearchPage'
+import AlbumPage from './pages/AlbumPage'
+import ArtistPage from './pages/ArtistPage'
+import AuthCallback from './pages/AuthCallback'
+
 import TopBar from './components/TopBar/TopBar'
 
 function AppRoutes() {
@@ -24,8 +30,10 @@ function AppRoutes() {
         <Box>
             <TopBar />
             <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/dashboard" element={<DashboardPage />} />
                 <Route path="/search" element={<SearchPage />} />
+                <Route path="/album/:id" element={<AlbumPage />} />
+                <Route path="/artist/:id" element={<ArtistPage />} />
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>

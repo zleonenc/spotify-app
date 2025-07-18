@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, Typography, CircularProgress } from '@mui/material';
+
 import { useMe } from '../../context';
 
 const Profile = () => {

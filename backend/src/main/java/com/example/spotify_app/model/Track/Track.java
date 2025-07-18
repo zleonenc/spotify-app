@@ -55,6 +55,9 @@ public class Track {
     @JsonProperty("uri")
     private String uri;
 
+    @JsonProperty("explicit")
+    private Boolean explicit;
+
     @Override
     public String toString() {
         return "Track{" +

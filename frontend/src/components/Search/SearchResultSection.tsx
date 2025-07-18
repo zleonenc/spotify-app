@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Box, Typography } from '@mui/material';
+
 import SearchCard from './SearchResultItem';
 
 type SearchResultType = 'track' | 'artist' | 'album';
@@ -15,7 +17,7 @@ const SearchResultSection: React.FC<SearchResultSectionProps> = ({ title, items,
 
     return (
         <Box sx={{ width: '100%', overflow: 'hidden' }}>
-            <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1, px: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: 600, mb: 1, px: 2 }}>
                 {title}
             </Typography>
             <Box sx={{ width: '100%' }}>

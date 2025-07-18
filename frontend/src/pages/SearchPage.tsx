@@ -7,6 +7,7 @@ import {
     Alert,
     Stack
 } from '@mui/material';
+
 import { useSearch } from '../context/SearchContext';
 import SearchResultSection from '../components/Search/SearchResultSection';
 

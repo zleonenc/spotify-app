@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.spotify_app.service.TokenService;
 import com.example.spotify_app.model.Artist.Artist;
 import com.example.spotify_app.model.Artist.ArtistTopTracksResponse;
-import com.example.spotify_app.model.Me.SpotifyTopArtistsResponse;
 import com.example.spotify_app.model.Artist.ArtistAlbumsResponse;
 import com.example.spotify_app.util.AuthUtils;
 
@@ -24,20 +23,6 @@ public class SpotifyArtistController {
 
     public SpotifyArtistController(TokenService tokenService) {
         this.tokenService = tokenService;
-    }
-
-    @GetMapping("/me/top/artists")
-    public ResponseEntity<SpotifyTopArtistsResponse> getTopArtists(
-            @RequestHeader("Authorization") String authHeader,
-            @RequestParam(value = "limit", defaultValue = "20") int limit) {
-        String userId = AuthUtils.extractUserId(authHeader);
-        if (userId == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        String endpoint = String.format("/me/top/artists?limit=%d", limit);
-
-        return tokenService.makeRequest(userId, endpoint, SpotifyTopArtistsResponse.class);
     }
 
     @GetMapping("/artists/{id}")

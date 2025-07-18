@@ -1,5 +1,7 @@
-import { Card, CardContent, Avatar, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
+import { Card, CardContent, Avatar, Typography, Box } from '@mui/material';
+
 import type { Artist } from '../../types';
 
 interface ArtistCardSmallProps {

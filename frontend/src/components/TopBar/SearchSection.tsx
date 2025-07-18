@@ -1,6 +1,9 @@
-import { Box, IconButton } from '@mui/material';
-import { Home as HomeIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+
+import { Box, IconButton } from '@mui/material';
+
+import { Home as HomeIcon } from '@mui/icons-material';
+
 import SearchBar from '../Search/Bar/SearchBar';
 
 const SearchSection = () => {

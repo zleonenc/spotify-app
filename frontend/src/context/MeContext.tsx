@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo, t
 import { useAuth } from './AuthContext';
 import apiClient from '../services/axios';
 
-import type { SpotifyProfile, Artist, TopArtists } from '../types';
+import type { SpotifyProfile, Artist, TopArtists, Track, TopTracks } from '../types';
 
 interface MeContextType {
     // Profile
@@ -15,8 +15,14 @@ interface MeContextType {
     topArtistsLoading: boolean;
     topArtistsError: string | null;
 
+    // Top Tracks
+    topTracks: Track[];
+    topTracksLoading: boolean;
+    topTracksError: string | null;
+
     fetchProfile: () => Promise<void>;
     fetchTopArtists: (limit?: number) => Promise<void>;
+    fetchTopTracks: (limit?: number) => Promise<void>;
 }
 
 const MeContext = createContext<MeContextType | undefined>(undefined);
@@ -33,6 +39,11 @@ export const MeProvider = ({ children }: { children: ReactNode }) => {
     const [topArtists, setTopArtists] = useState<Artist[]>([]);
     const [topArtistsLoading, setTopArtistsLoading] = useState(false);
     const [topArtistsError, setTopArtistsError] = useState<string | null>(null);
+
+    // Top tracks
+    const [topTracks, setTopTracks] = useState<Track[]>([]);
+    const [topTracksLoading, setTopTracksLoading] = useState(false);
+    const [topTracksError, setTopTracksError] = useState<string | null>(null);
 
     const fetchProfile = useCallback(async (): Promise<void> => {
         if (!userId) {
@@ -91,6 +102,34 @@ export const MeProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [userId, logout]);
 
+    const fetchTopTracks = useCallback(async (limit: number = 20): Promise<void> => {
+        if (!userId) {
+            setTopTracksError('Unauthenticated');
+            return;
+        }
+
+        try {
+            setTopTracksLoading(true);
+            setTopTracksError(null);
+
+            const response = await apiClient.get(`/api/me/top/tracks?limit=${limit}`);
+
+            const data: TopTracks = response.data;
+            setTopTracks(data.items || []);
+        } catch (err: any) {
+            console.error('Error fetching top tracks:', err);
+
+            if (err.response?.status === 401) {
+                logout();
+                setTopTracksError('Session expired. Log in again.');
+            } else {
+                setTopTracksError('Failed to load top tracks. Try again.');
+            }
+        } finally {
+            setTopTracksLoading(false);
+        }
+    }, [userId, logout]);
+
     useEffect(() => {
         fetchProfile();
     }, [fetchProfile]);
@@ -102,9 +141,13 @@ export const MeProvider = ({ children }: { children: ReactNode }) => {
         topArtists,
         topArtistsLoading,
         topArtistsError,
+        topTracks,
+        topTracksLoading,
+        topTracksError,
         fetchProfile,
         fetchTopArtists,
-    }), [profile, profileLoading, profileError, topArtists, topArtistsLoading, topArtistsError, fetchProfile, fetchTopArtists]);
+        fetchTopTracks
+    }), [profile, profileLoading, profileError, topArtists, topArtistsLoading, topArtistsError, topTracks, topTracksLoading, topTracksError, fetchProfile, fetchTopArtists, fetchTopTracks]);
 
     return (
         <MeContext.Provider value={value}>

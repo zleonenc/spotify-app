@@ -1,4 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import {
     Box,
     TextField,
@@ -18,7 +20,7 @@ import {
 } from '@mui/icons-material';
 
 import { useSearch } from '../../../context';
-import { useNavigate, useLocation } from 'react-router-dom';
+
 import SearchResultSection from '../SearchResultSection';
 import SearchFilter, { type SearchFilters } from './SearchFilter';
 

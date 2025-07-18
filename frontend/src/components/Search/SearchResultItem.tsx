@@ -1,5 +1,7 @@
-import { Avatar, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
+import { Avatar, Typography, Box } from '@mui/material';
+
 import type { Artist, Album, Track } from '../../types';
 
 type SearchItem = Artist | Album | Track;
