@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.spotify_app.model.Search.SpotifySearchResponse;
 import com.example.spotify_app.service.TokenService;
-import com.example.spotify_app.model.SpotifySearchResponse;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController
@@ -27,7 +27,6 @@ public class SpotifySearchController {
             @RequestHeader("Authorization") String authHeader,
             @RequestParam("q") String query,
             @RequestParam("type") String type,
-            @RequestParam(value = "market", defaultValue = "MX") String market,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit,
             @RequestParam(value = "offset", defaultValue = "0") Integer offset) {
 
@@ -45,7 +44,6 @@ public class SpotifySearchController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
         endpoint.append("&type=").append(type);
-        endpoint.append("&market=").append(market);
         endpoint.append("&limit=").append(limit);
         endpoint.append("&offset=").append(offset);
 
