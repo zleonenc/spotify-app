@@ -4,12 +4,12 @@ import { TableRow, TableCell, Avatar, Tooltip, Typography, Box } from '@mui/mate
 
 import type { Track } from '../../types';
 
-interface TrackRowProps {
+interface TrackRowWithPopularityProps {
     track: Track;
     index: number;
 }
 
-const TrackRow = ({ track, index }: TrackRowProps) => {
+const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -20,12 +20,14 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
         ? track.album.images[0].url
         : '';
 
-    const artistNames = track.artists?.map(artist => artist.name).join(', ') || 'Unknown Artist';
-
     const formatDuration = (durationMs: number) => {
         const minutes = Math.floor(durationMs / 60000);
         const seconds = Math.floor((durationMs % 60000) / 1000);
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    const formatPopularity = (popularity: number) => {
+        return `${popularity}/100`;
     };
 
     return (
@@ -51,7 +53,8 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
                     {index}
                 </Typography>
             </TableCell>
-            {/* Image */}
+
+            {/* Track Image */}
             <TableCell>
                 <Avatar
                     src={trackImage}
@@ -105,17 +108,17 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
                 </Box>
             </TableCell>
 
-            {/* Artist Names */}
-            <TableCell>
+            {/* Popularity */}
+            <TableCell align="center">
                 <Typography
                     variant="body2"
+                    color="text.secondary"
                     sx={{
-                        color: 'text.secondary',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        fontFamily: 'monospace',
+                        fontSize: '0.875rem',
                     }}
                 >
-                    {artistNames}
+                    {formatPopularity(track.popularity)}
                 </Typography>
             </TableCell>
 
@@ -136,4 +139,4 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
     );
 };
 
-export default TrackRow;
+export default TrackRowWithPopularity;

@@ -20,21 +20,17 @@ import {
 } from '@mui/icons-material';
 
 import { useSearch } from '../../../context';
+import type { SearchFilters } from '../../../context/SearchContext';
 
-import SearchResultSection from '../SearchResultSection';
-import SearchFilter, { type SearchFilters } from './SearchFilter';
+import SearchResultSection from './SearchResultSection';
+import SearchFilter from './SearchFilter';
 
 const SearchBar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { search, searchResults } = useSearch();
+    const { search, searchResults, filters, toggleFilter } = useSearch();
 
     const [query, setQuery] = useState('');
-    const [filters, setFilters] = useState<SearchFilters>({
-        track: true,
-        artist: true,
-        album: true
-    });
 
     const [filterAnchor, setFilterAnchor] = useState<HTMLButtonElement | null>(null);
     const [showQuickResults, setShowQuickResults] = useState(false);
@@ -158,11 +154,7 @@ const SearchBar = () => {
     };
 
     const handleFilterChange = (filterType: keyof SearchFilters) => {
-        const newFilters = {
-            ...filters,
-            [filterType]: !filters[filterType]
-        };
-        setFilters(newFilters);
+        toggleFilter(filterType);
     };
 
     const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement>) => {

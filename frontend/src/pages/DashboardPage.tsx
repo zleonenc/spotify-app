@@ -1,13 +1,13 @@
 import { Container } from '@mui/material';
 
 import DashboardTopArtists from '../components/Dashboard/DashboardTopArtists';
-import DashboardTopTracks from '../components/Dashboard/DashboardTopTracks';
+import DashboardTopTracksTable from '../components/Dashboard/DashboardTopTracksTable';
 
 const DashboardPage = () => {
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <DashboardTopArtists />
-            <DashboardTopTracks />
+            <DashboardTopTracksTable />
         </Container>
     );
 };

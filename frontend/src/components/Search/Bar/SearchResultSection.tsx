@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { Box, Typography } from '@mui/material';
 
-import SearchCard from './SearchResultItem';
+import SearchCard from '../SearchResultItem';
 
 type SearchResultType = 'track' | 'artist' | 'album';
 
@@ -12,7 +10,7 @@ interface SearchResultSectionProps {
     type: SearchResultType;
 }
 
-const SearchResultSection: React.FC<SearchResultSectionProps> = ({ title, items, type }) => {
+const SearchResultSection = ({ title, items, type }: SearchResultSectionProps) => {
     if (items.length === 0) return null;
 
     return (

@@ -16,11 +16,7 @@ import {
     Album as AlbumIcon
 } from '@mui/icons-material';
 
-export interface SearchFilters {
-    track: boolean;
-    artist: boolean;
-    album: boolean;
-}
+import type { SearchFilters } from '../../../context/SearchContext';
 
 interface SearchFilterProps {
     filters: SearchFilters;
@@ -30,13 +26,13 @@ interface SearchFilterProps {
     onClose: () => void;
 }
 
-const SearchFilter: React.FC<SearchFilterProps> = ({
+const SearchFilter = ({
     filters,
     onFilterChange,
     anchorEl,
     onOpen,
     onClose
-}) => {
+}: SearchFilterProps) => {
     const filterOptions = [
         { key: 'track' as const, label: 'Tracks', icon: TrackIcon },
         { key: 'artist' as const, label: 'Artists', icon: ArtistIcon },

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import { Box } from '@mui/material'
 
-import { AuthProvider, useAuth, MeProvider, SearchProvider } from './context'
+import { AuthProvider, useAuth, ProfileProvider, SearchProvider } from './context'
 
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
@@ -44,13 +44,13 @@ function AppRoutes() {
 function App() {
     return (
         <AuthProvider>
-            <MeProvider>
+            <ProfileProvider>
                 <SearchProvider>
                     <BrowserRouter>
                         <AppRoutes />
                     </BrowserRouter>
                 </SearchProvider>
-            </MeProvider>
+            </ProfileProvider>
         </AuthProvider>
     );
 }
