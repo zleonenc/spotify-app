@@ -8,20 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.spotify_app.config.SpotifyConfig;
 import com.example.spotify_app.model.Me.SpotifyProfileResponse;
 import com.example.spotify_app.model.Me.SpotifyTopArtistsResponse;
 import com.example.spotify_app.model.Me.SpotifyTopTracksResponse;
-import com.example.spotify_app.service.TokenService;
+import com.example.spotify_app.service.SpotifyProfileService;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController
 @RequestMapping("/api/me")
 public class SpotifyProfileController {
-    private final TokenService tokenService;
+    private final SpotifyProfileService profileService;
 
-    public SpotifyProfileController(SpotifyConfig spotifyConfig, TokenService tokenService) {
-        this.tokenService = tokenService;
+    public SpotifyProfileController(SpotifyProfileService profileService) {
+        this.profileService = profileService;
     }
 
     @GetMapping("/profile")
@@ -31,9 +30,7 @@ public class SpotifyProfileController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = "/me";
-
-        return tokenService.makeRequest(userId, endpoint, SpotifyProfileResponse.class);
+        return profileService.getProfile(userId);
     }
 
     @GetMapping("/top/artists")
@@ -45,9 +42,7 @@ public class SpotifyProfileController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = String.format("/me/top/artists?limit=%d", limit);
-
-        return tokenService.makeRequest(userId, endpoint, SpotifyTopArtistsResponse.class);
+        return profileService.getTopArtists(userId, limit);
     }
 
     @GetMapping("/top/tracks")
@@ -59,8 +54,6 @@ public class SpotifyProfileController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = String.format("/me/top/tracks?limit=%d", limit);
-
-        return tokenService.makeRequest(userId, endpoint, SpotifyTopTracksResponse.class);
+        return profileService.getTopTracks(userId, limit);
     }
 }
