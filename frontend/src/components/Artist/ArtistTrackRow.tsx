@@ -1,31 +1,53 @@
 import { useNavigate } from 'react-router-dom';
 
-import { TableRow, TableCell, Avatar, Tooltip, Typography, Box } from '@mui/material';
+import {
+    TableRow,
+    TableCell,
+    Avatar,
+    Tooltip,
+    Typography,
+    Box,
+    Chip
+} from '@mui/material';
 
 import type { Track } from '../../types';
 
-interface TrackRowProps {
+interface ArtistTrackRowProps {
     track: Track;
     index: number;
 }
 
-const TrackRow = ({ track, index }: TrackRowProps) => {
+const ArtistTrackRow = ({ track, index }: ArtistTrackRowProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
         navigate(`/track/${track.id}`);
     };
 
+    const handleAlbumClick = (e: React.MouseEvent, albumId: string) => {
+        e.stopPropagation(); // Prevent row click
+        navigate(`/album/${albumId}`);
+    };
+
     const trackImage = track.album?.images && track.album.images.length > 0
         ? track.album.images[0].url
         : '';
-
-    const artistNames = track.artists?.map(artist => artist.name).join(', ') || 'Unknown Artist';
 
     const formatDuration = (durationMs: number) => {
         const minutes = Math.floor(durationMs / 60000);
         const seconds = Math.floor((durationMs % 60000) / 1000);
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    const formatPopularity = (popularity: number) => {
+        return `${popularity}/100`;
+    };
+
+    const getTrackYear = () => {
+        if (track.album?.release_date) {
+            return new Date(track.album.release_date).getFullYear();
+        }
+        return null;
     };
 
     return (
@@ -51,7 +73,8 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
                     {index}
                 </Typography>
             </TableCell>
-            {/* Image */}
+
+            {/* Track Image */}
             <TableCell>
                 <Avatar
                     src={trackImage}
@@ -105,17 +128,55 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
                 </Box>
             </TableCell>
 
-            {/* Artist Names */}
+            {/* Album */}
             <TableCell>
+                {track.album && (
+                    <Chip
+                        label={track.album.name}
+                        variant="outlined"
+                        onClick={(e) => handleAlbumClick(e, track.album.id)}
+                        sx={{
+                            borderRadius: 2,
+                            cursor: 'pointer',
+                            maxWidth: '200px',
+                            '& .MuiChip-label': {
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                            },
+                            '&:hover': {
+                                backgroundColor: 'action.hover',
+                            },
+                        }}
+                    />
+                )}
+            </TableCell>
+
+            {/* Year */}
+            <TableCell align="center">
                 <Typography
                     variant="body2"
+                    color="text.secondary"
                     sx={{
-                        color: 'text.secondary',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        fontFamily: 'monospace',
+                        fontSize: '0.875rem',
                     }}
                 >
-                    {artistNames}
+                    {getTrackYear() || '-'}
+                </Typography>
+            </TableCell>
+
+            {/* Popularity */}
+            <TableCell align="center">
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                        fontFamily: 'monospace',
+                        fontSize: '0.875rem',
+                    }}
+                >
+                    {formatPopularity(track.popularity)}
                 </Typography>
             </TableCell>
 
@@ -136,4 +197,4 @@ const TrackRow = ({ track, index }: TrackRowProps) => {
     );
 };
 
-export default TrackRow;
+export default ArtistTrackRow;

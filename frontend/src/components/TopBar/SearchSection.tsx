@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Box, IconButton } from '@mui/material';
+import {
+    Box,
+    IconButton
+} from '@mui/material';
 
 import { Home as HomeIcon } from '@mui/icons-material';
 

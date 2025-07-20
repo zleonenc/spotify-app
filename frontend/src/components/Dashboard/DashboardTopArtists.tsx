@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-import { Box, Typography, CircularProgress, Alert } from '@mui/material';
+import {
+    Box,
+    Typography,
+    CircularProgress,
+    Alert
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { useProfile } from '../../context';

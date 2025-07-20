@@ -1,6 +1,13 @@
 import { useEffect } from 'react';
 
-import { Box, Typography, Avatar, Chip, CircularProgress, Alert } from '@mui/material';
+import {
+    Box,
+    Typography,
+    Avatar,
+    Chip,
+    CircularProgress,
+    Alert
+} from '@mui/material';
 
 import PeopleIcon from '@mui/icons-material/People';
 

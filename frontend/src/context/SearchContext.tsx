@@ -1,8 +1,15 @@
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react';
-
-import { useAuth } from './AuthContext';
+import {
+    createContext,
+    useContext,
+    useState,
+    useCallback,
+    useMemo,
+    type ReactNode
+} from 'react';
 
 import apiClient from '../services/axios';
+
+import { useAuth } from './AuthContext';
 
 import type { SearchResponse } from '../types';
 

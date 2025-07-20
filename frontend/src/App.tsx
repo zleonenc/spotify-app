@@ -1,8 +1,18 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
+} from 'react-router-dom'
 
 import { Box } from '@mui/material'
 
-import { AuthProvider, useAuth, ProfileProvider, SearchProvider } from './context'
+import {
+    AuthProvider,
+    useAuth,
+    ProfileProvider,
+    SearchProvider
+} from './context'
 
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'

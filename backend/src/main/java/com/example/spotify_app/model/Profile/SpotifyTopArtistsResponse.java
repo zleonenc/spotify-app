@@ -1,18 +1,19 @@
-package com.example.spotify_app.model.Me;
+package com.example.spotify_app.model.Profile;
 
-import com.example.spotify_app.model.Track.Track;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.example.spotify_app.model.Artist.Artist;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SpotifyTopTracksResponse {
+public class SpotifyTopArtistsResponse {
     @JsonProperty("items")
-    private Track[] items;
+    private Artist[] items;
 
     @JsonProperty("total")
     private int total;

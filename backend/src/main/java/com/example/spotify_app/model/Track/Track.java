@@ -1,12 +1,14 @@
 package com.example.spotify_app.model.Track;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.spotify_app.model.Album.Album;
-import com.example.spotify_app.model.Artist.Artist;
-import com.example.spotify_app.model.common.ExternalUrls;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import com.example.spotify_app.model.common.ExternalUrls;
+import com.example.spotify_app.model.Album.Album;
+import com.example.spotify_app.model.Artist.Artist;
 
 @Getter
 @NoArgsConstructor
@@ -57,18 +59,4 @@ public class Track {
 
     @JsonProperty("explicit")
     private Boolean explicit;
-
-    @Override
-    public String toString() {
-        return "Track{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", popularity=" + popularity +
-                ", durationMs=" + durationMs +
-                ", trackNumber=" + trackNumber +
-                ", discNumber=" + discNumber +
-                ", type='" + type + '\'' +
-                ", uri='" + uri +
-                '}';
-    }
 }

@@ -6,10 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import com.example.spotify_app.model.common.PagedResponse;
 import com.example.spotify_app.model.Album.Album;
 import com.example.spotify_app.model.Artist.Artist;
 import com.example.spotify_app.model.Track.Track;
-import com.example.spotify_app.model.common.PagedResponse;
 
 @Getter
 @NoArgsConstructor

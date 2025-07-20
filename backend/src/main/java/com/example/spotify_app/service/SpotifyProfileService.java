@@ -3,9 +3,9 @@ package com.example.spotify_app.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.example.spotify_app.model.Me.SpotifyProfileResponse;
-import com.example.spotify_app.model.Me.SpotifyTopArtistsResponse;
-import com.example.spotify_app.model.Me.SpotifyTopTracksResponse;
+import com.example.spotify_app.model.Profile.SpotifyProfileResponse;
+import com.example.spotify_app.model.Profile.SpotifyTopArtistsResponse;
+import com.example.spotify_app.model.Profile.SpotifyTopTracksResponse;
 
 @Service
 public class SpotifyProfileService {

@@ -1,19 +1,37 @@
 import { useNavigate } from 'react-router-dom';
 
-import { TableRow, TableCell, Avatar, Tooltip, Typography, Box } from '@mui/material';
+import {
+    TableRow,
+    TableCell,
+    Avatar,
+    Tooltip,
+    Typography,
+    Box,
+    Chip
+} from '@mui/material';
 
 import type { Track } from '../../types';
 
-interface TrackRowWithPopularityProps {
+interface DashboardTrackRowProps {
     track: Track;
     index: number;
 }
 
-const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) => {
+const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
         navigate(`/track/${track.id}`);
+    };
+
+    const handleAlbumClick = (e: React.MouseEvent, albumId: string) => {
+        e.stopPropagation(); // Prevent row click
+        navigate(`/album/${albumId}`);
+    };
+
+    const handleArtistClick = (e: React.MouseEvent, artistId: string) => {
+        e.stopPropagation(); // Prevent row click
+        navigate(`/artist/${artistId}`);
     };
 
     const trackImage = track.album?.images && track.album.images.length > 0
@@ -24,10 +42,6 @@ const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) =
         const minutes = Math.floor(durationMs / 60000);
         const seconds = Math.floor((durationMs % 60000) / 1000);
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-    };
-
-    const formatPopularity = (popularity: number) => {
-        return `${popularity}/100`;
     };
 
     return (
@@ -53,8 +67,7 @@ const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) =
                     {index}
                 </Typography>
             </TableCell>
-
-            {/* Track Image */}
+            {/* Image */}
             <TableCell>
                 <Avatar
                     src={trackImage}
@@ -108,18 +121,71 @@ const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) =
                 </Box>
             </TableCell>
 
-            {/* Popularity */}
-            <TableCell align="center">
-                <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                        fontFamily: 'monospace',
-                        fontSize: '0.875rem',
-                    }}
-                >
-                    {formatPopularity(track.popularity)}
-                </Typography>
+            {/* Artist Names */}
+            <TableCell>
+                <Box sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 0.5,
+                    alignItems: 'center'
+                }}>
+                    {track.artists?.map((artist, index) => (
+                        <Box key={artist.id || index} sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Chip
+                                label={artist.name}
+                                variant="outlined"
+                                size="small"
+                                onClick={(e) => handleArtistClick(e, artist.id)}
+                                sx={{
+                                    height: 24,
+                                    fontSize: '0.75rem',
+                                    borderRadius: 1.5,
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        backgroundColor: 'action.hover',
+                                    },
+                                }}
+                            />
+                            {index < (track.artists?.length || 0) - 1 && (
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{ mx: 0.5 }}
+                                >
+                                    ,
+                                </Typography>
+                            )}
+                        </Box>
+                    )) || (
+                            <Typography variant="body2" color="text.secondary">
+                                Unknown Artist
+                            </Typography>
+                        )}
+                </Box>
+            </TableCell>
+
+            {/* Album */}
+            <TableCell>
+                {track.album && (
+                    <Chip
+                        label={track.album.name}
+                        variant="outlined"
+                        onClick={(e) => handleAlbumClick(e, track.album.id)}
+                        sx={{
+                            borderRadius: 2,
+                            cursor: 'pointer',
+                            maxWidth: '200px',
+                            '& .MuiChip-label': {
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                            },
+                            '&:hover': {
+                                backgroundColor: 'action.hover',
+                            },
+                        }}
+                    />
+                )}
             </TableCell>
 
             {/* Duration */}
@@ -139,4 +205,4 @@ const TrackRowWithPopularity = ({ track, index }: TrackRowWithPopularityProps) =
     );
 };
 
-export default TrackRowWithPopularity;
+export default DashboardTrackRow;

@@ -1,11 +1,24 @@
 import { useEffect } from 'react';
 
-import { Box, Typography, CircularProgress, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+    Box,
+    Typography,
+    CircularProgress,
+    Alert,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper
+} from '@mui/material';
+
 import { AccessTime } from '@mui/icons-material';
 
 import { useProfile } from '../../context';
 
-import { TrackRow } from '../Track';
+import DashboardTrackRow from './DashboardTrackRow';
 
 const DashboardTopTracksTable = () => {
     const { topTracks, topTracksLoading, topTracksError, fetchTopTracks } = useProfile();
@@ -94,6 +107,15 @@ const DashboardTopTracksTable = () => {
                                     Artist(s)
                                 </TableCell>
                                 <TableCell
+                                    sx={{
+                                        fontWeight: 600,
+                                        color: 'text.secondary',
+                                        width: 200,
+                                    }}
+                                >
+                                    Album
+                                </TableCell>
+                                <TableCell
                                     align="right"
                                     sx={{
                                         fontWeight: 600,
@@ -107,7 +129,7 @@ const DashboardTopTracksTable = () => {
                         </TableHead>
                         <TableBody>
                             {limitedTracks.map((track, index) => (
-                                <TrackRow
+                                <DashboardTrackRow
                                     key={track.id}
                                     track={track}
                                     index={index + 1}

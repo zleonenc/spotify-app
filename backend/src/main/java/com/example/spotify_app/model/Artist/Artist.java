@@ -44,19 +44,4 @@ public class Artist {
     @JsonProperty("uri")
     private String uri;
 
-    @Override
-    public String toString() {
-        return "Artist{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", popularity=" + popularity +
-                ", followers=" + followers +
-                ", genres=" + java.util.Arrays.toString(genres) +
-                ", externalUrls=" + externalUrls +
-                ", href='" + href + '\'' +
-                ", images=" + java.util.Arrays.toString(images) +
-                ", type='" + type + '\'' +
-                ", uri='" + uri + '\'' +
-                '}';
-    }
 }
