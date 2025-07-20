@@ -121,7 +121,7 @@ const SearchItem = <T extends SearchItem>({ item, type }: SearchItemProps<T>) =>
                     sx={{
                         width: 60,
                         height: 60,
-                        borderRadius: type === 'artist' ? '50%' : 1,
+                        borderRadius: type === 'artist' ? '50%' : 2,
                         flexShrink: 0,
                     }}
                     variant={type === 'artist' ? 'circular' : 'square'}

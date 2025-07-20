@@ -10,6 +10,8 @@ import {
     Chip
 } from '@mui/material';
 
+import AlbumIcon from '@mui/icons-material/Album';
+
 import type { Track } from '../../types';
 
 interface ArtistTrackRowProps {
@@ -82,7 +84,7 @@ const ArtistTrackRow = ({ track, index }: ArtistTrackRowProps) => {
                     sx={{
                         width: 40,
                         height: 40,
-                        borderRadius: 1,
+                        borderRadius: 2, // Required by Spotify
                     }}
                     variant="square"
                 >
@@ -134,6 +136,7 @@ const ArtistTrackRow = ({ track, index }: ArtistTrackRowProps) => {
                     <Chip
                         label={track.album.name}
                         variant="outlined"
+                        icon={<AlbumIcon />}
                         onClick={(e) => handleAlbumClick(e, track.album.id)}
                         sx={{
                             borderRadius: 2,

@@ -2,7 +2,7 @@ import React,
 {
     useState
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 import {
     Box,
@@ -12,18 +12,18 @@ import {
     MenuItem,
     ListItemIcon,
     ListItemText,
-    Divider
+    // Divider
 } from '@mui/material';
 
 import {
-    AccountCircle as ProfileIcon,
+    // AccountCircle as ProfileIcon,
     Logout as LogoutIcon
 } from '@mui/icons-material';
 
 import { useAuth, useProfile } from '../../context';
 
 const UserProfile = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const { logout } = useAuth();
     const { profile } = useProfile();
     const [profileMenuAnchor, setProfileMenuAnchor] = useState<null | HTMLElement>(null);
@@ -36,16 +36,15 @@ const UserProfile = () => {
         setProfileMenuAnchor(null);
     };
 
-    const handleProfileInfo = () => {
-        handleProfileMenuClose();
-        navigate('/profile');
-    };
+    // const handleProfileInfo = () => {
+    //     handleProfileMenuClose();
+    //     navigate('/profile');
+    // };
 
     const handleLogout = async () => {
         handleProfileMenuClose();
         try {
             await logout();
-            navigate('/login');
         } catch (error) {
             console.error('Logout failed:', error);
         }
@@ -104,6 +103,7 @@ const UserProfile = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
+                {/*
                 <MenuItem onClick={handleProfileInfo}>
                     <ListItemIcon>
                         <ProfileIcon fontSize="small" />
@@ -111,6 +111,7 @@ const UserProfile = () => {
                     <ListItemText>Profile Info</ListItemText>
                 </MenuItem>
                 <Divider />
+                */}
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <LogoutIcon fontSize="small" />

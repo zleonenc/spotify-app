@@ -10,6 +10,9 @@ import {
     Chip
 } from '@mui/material';
 
+import AlbumIcon from '@mui/icons-material/Album';
+import PersonIcon from '@mui/icons-material/Person';
+
 import type { Track } from '../../types';
 
 interface DashboardTrackRowProps {
@@ -75,7 +78,7 @@ const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
                     sx={{
                         width: 40,
                         height: 40,
-                        borderRadius: 1,
+                        borderRadius: 2, // Required by Spotify
                     }}
                     variant="square"
                 >
@@ -132,6 +135,7 @@ const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
                     {track.artists?.map((artist, index) => (
                         <Box key={artist.id || index} sx={{ display: 'flex', alignItems: 'center' }}>
                             <Chip
+                                icon ={<PersonIcon />}
                                 label={artist.name}
                                 variant="outlined"
                                 size="small"
@@ -170,6 +174,7 @@ const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
                     <Chip
                         label={track.album.name}
                         variant="outlined"
+                        icon={<AlbumIcon />}
                         onClick={(e) => handleAlbumClick(e, track.album.id)}
                         sx={{
                             borderRadius: 2,
