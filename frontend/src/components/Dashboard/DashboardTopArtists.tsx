@@ -3,12 +3,12 @@ import { useEffect } from 'react';
 import { Box, Typography, CircularProgress, Alert } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
-import { useMe } from '../../context';
+import { useProfile } from '../../context';
 
 import ArtistCardSmall from '../Artist/ArtistCardSmall';
 
 const DashboardTopArtists = () => {
-    const { topArtists, topArtistsLoading, topArtistsError, fetchTopArtists } = useMe();
+    const { topArtists, topArtistsLoading, topArtistsError, fetchTopArtists } = useProfile();
 
     useEffect(() => {
         fetchTopArtists();
@@ -30,7 +30,9 @@ const DashboardTopArtists = () => {
         );
     }
 
-    const limitedArtists = topArtists.slice(0, 10);
+    const artists = topArtists || [];
+
+    const limitedArtists = artists.slice(0, 10);
 
     return (
         <Box sx={{
@@ -40,7 +42,7 @@ const DashboardTopArtists = () => {
                 My top artists
             </Typography>
 
-            {topArtists.length === 0 ? (
+            {artists.length === 0 ? (
                 <Box sx={{
 
                 }}>

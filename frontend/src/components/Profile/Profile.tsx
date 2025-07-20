@@ -1,9 +1,9 @@
 import { Box, Card, CardContent, Typography, CircularProgress } from '@mui/material';
 
-import { useMe } from '../../context';
+import { useProfile } from '../../context';
 
 const Profile = () => {
-    const { profile, profileLoading, profileError } = useMe();
+    const { profile, profileLoading, profileError } = useProfile();
 
     if (profileLoading) {
         return (

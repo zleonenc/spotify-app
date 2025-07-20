@@ -4,19 +4,19 @@ import apiClient from '../services/axios';
 
 import type { SpotifyProfile, Artist, TopArtists, Track, TopTracks } from '../types';
 
-interface MeContextType {
+interface ProfileContextType {
     // Profile
     profile: SpotifyProfile | null;
     profileLoading: boolean;
     profileError: string | null;
 
     // Top artists
-    topArtists: Artist[];
+    topArtists: Artist[] | null;
     topArtistsLoading: boolean;
     topArtistsError: string | null;
 
     // Top Tracks
-    topTracks: Track[];
+    topTracks: Track[] | null;
     topTracksLoading: boolean;
     topTracksError: string | null;
 
@@ -25,9 +25,9 @@ interface MeContextType {
     fetchTopTracks: (limit?: number) => Promise<void>;
 }
 
-const MeContext = createContext<MeContextType | undefined>(undefined);
+const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-export const MeProvider = ({ children }: { children: ReactNode }) => {
+export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     const { userId, logout } = useAuth();
 
     // Profile
@@ -150,16 +150,16 @@ export const MeProvider = ({ children }: { children: ReactNode }) => {
     }), [profile, profileLoading, profileError, topArtists, topArtistsLoading, topArtistsError, topTracks, topTracksLoading, topTracksError, fetchProfile, fetchTopArtists, fetchTopTracks]);
 
     return (
-        <MeContext.Provider value={value}>
+        <ProfileContext.Provider value={value}>
             {children}
-        </MeContext.Provider>
+        </ProfileContext.Provider>
     );
 };
 
-export const useMe = (): MeContextType => {
-    const context = useContext(MeContext);
+export const useProfile = (): ProfileContextType => {
+    const context = useContext(ProfileContext);
     if (!context) {
-        throw new Error('useMe must be used within a MeProvider');
+        throw new Error('useProfile must be used within a ProfileProvider');
     }
     return context;
 };

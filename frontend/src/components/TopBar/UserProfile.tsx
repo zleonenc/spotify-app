@@ -17,12 +17,12 @@ import {
     Logout as LogoutIcon
 } from '@mui/icons-material';
 
-import { useAuth, useMe } from '../../context';
+import { useAuth, useProfile } from '../../context';
 
 const UserProfile = () => {
     const navigate = useNavigate();
     const { logout } = useAuth();
-    const { profile } = useMe();
+    const { profile } = useProfile();
     const [profileMenuAnchor, setProfileMenuAnchor] = useState<null | HTMLElement>(null);
 
     const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {

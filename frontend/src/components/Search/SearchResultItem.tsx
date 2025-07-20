@@ -25,6 +25,14 @@ const SearchItem = <T extends SearchItem>({ item, type }: SearchItemProps<T>) =>
     };
 
     const getImage = () => {
+        if (type === 'track') {
+            const track = item as Track;
+            if (track.album?.images && track.album.images.length > 0) {
+                return track.album.images[0].url;
+            }
+            return '';
+        }
+
         if ('images' in item && item.images && item.images.length > 0) {
             return item.images[0].url;
         }
