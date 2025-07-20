@@ -1,8 +1,24 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo, type ReactNode } from 'react';
-import { useAuth } from './AuthContext';
+import {
+    createContext,
+    useContext,
+    useState,
+    useEffect,
+    useCallback,
+    useMemo,
+    type ReactNode
+} from 'react';
+
 import apiClient from '../services/axios';
 
-import type { SpotifyProfile, Artist, TopArtists, Track, TopTracks } from '../types';
+import { useAuth } from './AuthContext';
+
+import type {
+    SpotifyProfile,
+    Artist,
+    TopArtists,
+    Track,
+    TopTracks
+} from '../types';
 
 interface ProfileContextType {
     // Profile

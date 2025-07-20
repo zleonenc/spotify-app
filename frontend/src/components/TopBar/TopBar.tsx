@@ -1,6 +1,13 @@
-import { AppBar, Toolbar } from '@mui/material';
+import {
+    AppBar,
+    Toolbar
+} from '@mui/material';
 
-import { AppLogo, SearchSection, UserProfile } from '.';
+import {
+    AppLogo,
+    SearchSection,
+    UserProfile
+} from '.';
 
 const TopBar = () => {
     return (

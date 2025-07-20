@@ -15,9 +15,4 @@ public class Followers {
 
     @JsonProperty("total")
     private int total;
-
-    @Override
-    public String toString() {
-        return "Followers{href='" + href + '\'' + ", total=" + total + '}';
-    }
 }

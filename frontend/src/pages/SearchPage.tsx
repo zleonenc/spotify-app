@@ -1,4 +1,10 @@
 import {
+    useState,
+    useEffect
+} from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import {
     Container,
     Typography,
     Box,
@@ -8,9 +14,6 @@ import {
     Tabs,
     Tab
 } from '@mui/material';
-
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { useSearch } from '../context/SearchContext';
 import SearchCard from '../components/Search/SearchResultItem';

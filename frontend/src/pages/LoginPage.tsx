@@ -1,4 +1,9 @@
-import { Button, Container, Typography, Box } from '@mui/material';
+import {
+    Button,
+    Container,
+    Typography,
+    Box
+} from '@mui/material';
 
 const LoginPage = () => {
     const handleLogin = async () => {
@@ -19,11 +24,11 @@ const LoginPage = () => {
                     Please log in to continue.
                 </Typography>
             </Box>
-            <Button 
-            variant="contained" 
-            color="primary" 
-            size="large"
-            onClick={handleLogin}>
+            <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={handleLogin}>
                 Login with Spotify
             </Button>
         </Container>

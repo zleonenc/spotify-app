@@ -18,9 +18,4 @@ public class Image {
 
     @JsonProperty("width")
     private Integer width;
-
-    @Override
-    public String toString() {
-        return "Image{url='" + url + '\'' + ", height=" + height + ", width=" + width + '}';
-    }
 }

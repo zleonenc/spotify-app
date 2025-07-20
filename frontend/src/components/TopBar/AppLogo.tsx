@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Typography } from '@mui/material';
+import {
+    Box,
+    Typography
+} from '@mui/material';
 
 import logoImage from '../../assets/encora-logo.webp';
 

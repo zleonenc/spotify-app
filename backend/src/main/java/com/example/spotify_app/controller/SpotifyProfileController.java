@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.spotify_app.model.Me.SpotifyProfileResponse;
-import com.example.spotify_app.model.Me.SpotifyTopArtistsResponse;
-import com.example.spotify_app.model.Me.SpotifyTopTracksResponse;
+import com.example.spotify_app.model.Profile.SpotifyProfileResponse;
+import com.example.spotify_app.model.Profile.SpotifyTopArtistsResponse;
+import com.example.spotify_app.model.Profile.SpotifyTopTracksResponse;
 import com.example.spotify_app.service.SpotifyProfileService;
 import com.example.spotify_app.util.AuthUtils;
 

@@ -1,11 +1,24 @@
 import { useEffect } from 'react';
 
-import { Box, Typography, CircularProgress, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import {
+    Box,
+    Typography,
+    CircularProgress,
+    Alert,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper
+} from '@mui/material';
+
 import { AccessTime } from '@mui/icons-material';
 
 import { useArtist } from '../../context';
 
-import { TrackRowWithPopularity } from '../Track';
+import ArtistTrackRow from './ArtistTrackRow';
 
 interface ArtistTopTracksProps {
     artistId: string;
@@ -93,6 +106,27 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                     Song Name
                                 </TableCell>
                                 <TableCell
+                                    sx={{
+                                        fontWeight: 600,
+                                        color: 'text.secondary',
+                                        width: 200,
+                                    }}
+                                >
+                                    Album
+                                </TableCell>
+
+
+                                <TableCell
+                                    align="center"
+                                    sx={{
+                                        fontWeight: 600,
+                                        color: 'text.secondary',
+                                        width: 80,
+                                    }}
+                                >
+                                    Year
+                                </TableCell>
+                                <TableCell
                                     align="center"
                                     sx={{
                                         fontWeight: 600,
@@ -116,7 +150,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                         </TableHead>
                         <TableBody>
                             {limitedTracks.slice(0, 10).map((track, index) => (
-                                <TrackRowWithPopularity
+                                <ArtistTrackRow
                                     key={track.id}
                                     track={track}
                                     index={index + 1}

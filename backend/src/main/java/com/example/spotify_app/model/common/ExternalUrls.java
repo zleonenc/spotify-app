@@ -12,9 +12,4 @@ import lombok.NoArgsConstructor;
 public class ExternalUrls {
     @JsonProperty("spotify")
     private String spotify;
-
-    @Override
-    public String toString() {
-        return "ExternalUrls{spotify='" + spotify + '\'' + '}';
-    }
 }

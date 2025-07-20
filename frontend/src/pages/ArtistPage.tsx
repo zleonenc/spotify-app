@@ -1,10 +1,13 @@
-import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
+
+import { Container } from '@mui/material';
+
+import { ArtistProvider } from '../context';
 
 import ArtistCardBig from "../components/Artist/ArtistCardBig";
 import ArtistTopTracksTable from "../components/Artist/ArtistTopTracksTable";
 import ArtistTopAlbums from "../components/Artist/ArtistTopAlbums";
-import { ArtistProvider } from '../context';
+
 
 const ArtistPage = () => {
     const { id } = useParams<{ id: string }>();

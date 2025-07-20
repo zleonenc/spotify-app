@@ -1,10 +1,21 @@
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react';
+import {
+    createContext,
+    useContext,
+    useState,
+    useCallback,
+    useMemo,
+    type ReactNode
+} from 'react';
 
 import { useAuth } from './AuthContext';
 
 import apiClient from '../services/axios';
 
-import type { Artist, ArtistAlbums, ArtistTopTracks } from '../types';
+import type {
+    Artist,
+    ArtistAlbums,
+    ArtistTopTracks
+} from '../types';
 
 interface ArtistContextType {
     artist: Artist | null;

@@ -1,6 +1,15 @@
-import { useState, useEffect } from 'react';
+import {
+    useState,
+    useEffect
+} from 'react';
 
-import { Box, Typography, CircularProgress, Alert, Button } from '@mui/material';
+import {
+    Box,
+    Typography,
+    CircularProgress,
+    Alert,
+    Button
+} from '@mui/material';
 import Grid from '@mui/material/Grid';
 
 import { useArtist } from '../../context';
