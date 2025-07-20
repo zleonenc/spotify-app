@@ -16,12 +16,11 @@ public class SpotifyApiClient {
     private final SpotifyOAuthService oauthService;
     private final RestClient restClient;
 
-    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, SpotifyOAuthService oauthService,
-            RestClient restClient) {
+    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, SpotifyOAuthService oauthService) {
         this.spotifyConfig = spotifyConfig;
         this.tokenStore = tokenStore;
         this.oauthService = oauthService;
-        this.restClient = restClient;
+        this.restClient = RestClient.create();
     }
 
     public String getValidAccessToken(String userId) {
