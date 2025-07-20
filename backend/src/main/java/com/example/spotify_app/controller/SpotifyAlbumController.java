@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spotify_app.model.Album.Album;
 import com.example.spotify_app.model.Album.AlbumTracksResponse;
-import com.example.spotify_app.service.TokenService;
+import com.example.spotify_app.service.SpotifyAlbumService;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController
 @RequestMapping("/api")
 public class SpotifyAlbumController {
 
-    private final TokenService tokenService;
+    private final SpotifyAlbumService albumService;
 
-    public SpotifyAlbumController(TokenService tokenService) {
-        this.tokenService = tokenService;
+    public SpotifyAlbumController(SpotifyAlbumService albumService) {
+        this.albumService = albumService;
     }
 
     @GetMapping("/albums/{id}")
@@ -32,9 +32,7 @@ public class SpotifyAlbumController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = String.format("/albums/%s", albumId);
-
-        return tokenService.makeRequest(userId, endpoint, Album.class);
+        return albumService.getAlbumById(userId, albumId);
     }
 
     @GetMapping("/albums/{id}/tracks")
@@ -46,8 +44,6 @@ public class SpotifyAlbumController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = String.format("/albums/%s/tracks", albumId);
-
-        return tokenService.makeRequest(userId, endpoint, AlbumTracksResponse.class);
+        return albumService.getAlbumTracks(userId, albumId);
     }
 }

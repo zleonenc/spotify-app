@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spotify_app.model.Search.SpotifySearchResponse;
-import com.example.spotify_app.service.TokenService;
+import com.example.spotify_app.service.SpotifySearchService;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController
 @RequestMapping("/api")
 public class SpotifySearchController {
 
-    private final TokenService tokenService;
+    private final SpotifySearchService searchService;
 
-    public SpotifySearchController(TokenService tokenService) {
-        this.tokenService = tokenService;
+    public SpotifySearchController(SpotifySearchService searchService) {
+        this.searchService = searchService;
     }
 
     @GetMapping("/search")
@@ -36,17 +36,10 @@ public class SpotifySearchController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        StringBuilder endpoint = new StringBuilder("/search");
-
         try {
-            endpoint.append("?q=").append(java.net.URLEncoder.encode(query, "UTF-8"));
-        } catch (java.io.UnsupportedEncodingException e) {
+            return searchService.search(userId, query, type, limit, offset);
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        endpoint.append("&type=").append(type);
-        endpoint.append("&limit=").append(limit);
-        endpoint.append("&offset=").append(offset);
-
-        return tokenService.makeRequest(userId, endpoint.toString(), SpotifySearchResponse.class);
     }
 }
