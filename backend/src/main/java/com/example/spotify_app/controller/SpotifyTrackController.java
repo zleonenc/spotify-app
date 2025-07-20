@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spotify_app.model.Track.Track;
-import com.example.spotify_app.service.TokenService;
+import com.example.spotify_app.service.SpotifyTrackService;
 import com.example.spotify_app.util.AuthUtils;
 
 @RestController
 @RequestMapping("/api")
 public class SpotifyTrackController {
 
-    private final TokenService tokenService;
+    private final SpotifyTrackService trackService;
 
-    public SpotifyTrackController(TokenService tokenService) {
-        this.tokenService = tokenService;
+    public SpotifyTrackController(SpotifyTrackService trackService) {
+        this.trackService = trackService;
     }
 
     @GetMapping("/tracks/{id}")
@@ -31,8 +31,6 @@ public class SpotifyTrackController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        String endpoint = String.format("/tracks/%s", trackId);
-
-        return tokenService.makeRequest(userId, endpoint, Track.class);
+        return trackService.getTrackById(userId, trackId);
     }
 }
