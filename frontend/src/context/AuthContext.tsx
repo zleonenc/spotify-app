@@ -37,12 +37,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const logout = useCallback(async () => {
         if (userId) {
             try {
+                // Remove token from backend
                 await apiClient.delete('/api/auth/logout');
             } catch (error) {
                 console.error('Error during logout:', error);
             }
         }
+
         setUserId(null);
+
+        window.open('https://accounts.spotify.com/logout', '_blank');
+
+        window.location.href = '/login?logged_out=true';
     }, [userId, setUserId]);
 
     const value = useMemo(() => ({

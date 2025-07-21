@@ -51,7 +51,7 @@ const ArtistCardSmall = ({ artist }: ArtistCardSmallProps) => {
                         sx={{
                             width: 60,
                             height: 60,
-                            borderRadius: 1,
+                            borderRadius: 2, // Required by Spotify
                         }}
                     >
                         {artist.name.charAt(0).toUpperCase()}

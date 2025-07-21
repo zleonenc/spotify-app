@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 
 import AlbumIcon from '@mui/icons-material/Album';
+import PersonIcon from '@mui/icons-material/Person';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -98,9 +99,9 @@ const AlbumCardBig = ({ albumId }: AlbumCardBigProps) => {
                 src={albumImage}
                 alt={album.name}
                 sx={{
-                    width: { xs: 200, md: 250 },
-                    height: { xs: 200, md: 250 },
-                    borderRadius: 2,
+                    width: { xs: 200, md: 275 },
+                    height: { xs: 200, md: 275 },
+                    borderRadius: {xs: 2, md: 4 }, // Required by Spotify
                     boxShadow: 3,
                     flexShrink: 0,
                 }}
@@ -110,6 +111,20 @@ const AlbumCardBig = ({ albumId }: AlbumCardBigProps) => {
 
             {/* Info */}
             <Box sx={{ flex: 1, minWidth: 0 }}>
+                {/* Type */}
+                <Typography
+                    variant="body2"
+                    sx={{
+                        fontWeight: 600,
+                        color: 'text.secondary',
+                        mb: 1,
+                        textTransform: 'uppercase',
+                        letterSpacing: 1,
+                    }}
+                >
+                    Album
+                </Typography>
+
                 <Typography
                     variant="h2"
                     component="h1"
@@ -200,6 +215,7 @@ const AlbumCardBig = ({ albumId }: AlbumCardBigProps) => {
                         }}>
                             {album.artists.map((artist, index) => (
                                 <Chip
+                                    icon={<PersonIcon />}
                                     key={artist.id || index}
                                     label={artist.name}
                                     variant="outlined"

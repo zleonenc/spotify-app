@@ -80,9 +80,9 @@ const ArtistCardBig = ({ artistId }: ArtistCardBigProps) => {
                 src={artistImage}
                 alt={artist.name}
                 sx={{
-                    width: { xs: 200, md: 250 },
-                    height: { xs: 200, md: 250 },
-                    borderRadius: 2,
+                    width: { xs: 200, md: 275 },
+                    height: { xs: 200, md: 275 },
+                    borderRadius: {xs: 2, md: 4 }, // Required by Spotify
                     boxShadow: 3,
                     flexShrink: 0,
                 }}
@@ -94,6 +94,20 @@ const ArtistCardBig = ({ artistId }: ArtistCardBigProps) => {
 
             {/* Info */}
             <Box sx={{ flex: 1, minWidth: 0 }}>
+                {/* Type */}
+                <Typography
+                    variant="body2"
+                    sx={{
+                        fontWeight: 600,
+                        color: 'text.secondary',
+                        mb: 1,
+                        textTransform: 'uppercase',
+                        letterSpacing: 1,
+                    }}
+                >
+                    Artist
+                </Typography>
+
                 <Typography
                     variant="h2"
                     component="h1"

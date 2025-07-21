@@ -7,17 +7,24 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import com.example.spotify_app.config.SpotifyConfig;
+import com.example.spotify_app.config.RetryConfig;
 import com.example.spotify_app.model.SpotifyTokenResponse;
+import com.example.spotify_app.util.RetryUtils;
 
 @Service
 public class SpotifyApiClient {
     private final SpotifyConfig spotifyConfig;
+    private final RetryConfig retryConfig;
     private final TokenStore tokenStore;
+    private final RetryUtils retryUtils;
     private final SpotifyOAuthService oauthService;
     private final RestClient restClient;
 
-    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, SpotifyOAuthService oauthService) {
+    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, RetryConfig retryConfig, RetryUtils retryUtils,
+            SpotifyOAuthService oauthService) {
         this.spotifyConfig = spotifyConfig;
+        this.retryConfig = retryConfig;
+        this.retryUtils = retryUtils;
         this.tokenStore = tokenStore;
         this.oauthService = oauthService;
         this.restClient = RestClient.create();
@@ -35,26 +42,51 @@ public class SpotifyApiClient {
     }
 
     private <T> ResponseEntity<T> executeRequest(String apiEndpoint, String accessToken, Class<T> responseType) {
-        String fullUrl = spotifyConfig.getApiUrl() + apiEndpoint;
+        int attempts = 0;
 
-        try {
-            T responseBody = restClient.get()
-                    .uri(fullUrl)
-                    .header("Authorization", "Bearer " + accessToken)
-                    .retrieve()
-                    .body(responseType);
+        while (attempts < retryConfig.getMaxRetryAttempts()) {
+            try {
+                String fullUrl = spotifyConfig.getApiUrl() + apiEndpoint;
 
-            return ResponseEntity.ok(responseBody);
+                T responseBody = restClient.get()
+                        .uri(fullUrl)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .retrieve()
+                        .body(responseType);
 
-        } catch (HttpClientErrorException.Unauthorized e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } catch (HttpClientErrorException e) {
-            System.err.println("HTTP Error: " + e.getStatusCode() + " - " + e.getMessage());
-            return ResponseEntity.status(e.getStatusCode()).build();
-        } catch (Exception e) {
-            System.err.println("Unexpected error: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                return ResponseEntity.ok(responseBody);
+
+            } catch (HttpClientErrorException.TooManyRequests e) {
+                attempts++;
+
+                if (attempts >= retryConfig.getMaxRetryAttempts()) {
+                    System.err.println("Max retry attempts reached for request: " + apiEndpoint);
+                    return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+                }
+
+                long retryAfterSeconds = retryUtils.getRetryAfterSeconds(e);
+                System.out.println("(429) Attempt:" + attempts + " for: " + apiEndpoint + ". Retrying after "
+                        + retryAfterSeconds + " seconds.");
+
+                try {
+                    Thread.sleep(retryAfterSeconds * 1000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+                }
+
+            } catch (HttpClientErrorException.Unauthorized e) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            } catch (HttpClientErrorException e) {
+                System.err.println("HTTP Error: " + e.getStatusCode() + " - " + e.getMessage());
+                return ResponseEntity.status(e.getStatusCode()).build();
+            } catch (Exception e) {
+                System.err.println("Unexpected error: " + e.getMessage());
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
         }
+
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
 
     public <T> ResponseEntity<T> makeRequest(String userId, String apiEndpoint, Class<T> responseType) {
