@@ -9,7 +9,7 @@ import {
 
 import { useAuth } from './AuthContext';
 
-import apiClient from '../services/axios';
+import { albumService } from '../services';
 
 import type { Album } from '../types';
 
@@ -41,8 +41,8 @@ export const AlbumProvider = ({ children }: { children: ReactNode }) => {
             setAlbumLoading(true);
             setAlbumError(null);
 
-            const response = await apiClient.get(`/api/albums/${albumId}`);
-            setAlbum(response.data);
+            const data = await albumService.getAlbum(albumId);
+            setAlbum(data);
         } catch (err: any) {
             console.error('Error fetching album:', err);
 

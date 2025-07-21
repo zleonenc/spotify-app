@@ -95,8 +95,8 @@ const TrackCardBig = ({ trackId }: TrackCardBigProps) => {
                 src={trackImage}
                 alt={track.name}
                 sx={{
-                    width: { xs: 200, md: 275 },
-                    height: { xs: 200, md: 275 },
+                    width: { xs: 200, md: 250 },
+                    height: { xs: 200, md: 250 },
                     borderRadius: { xs: 2, md: 4 }, // Required by Spotify
                     boxShadow: 3,
                     flexShrink: 0,
@@ -287,42 +287,6 @@ const TrackCardBig = ({ trackId }: TrackCardBigProps) => {
                             </Box>
                         </Box>
                     )}
-                </Box>
-
-                {/* Play on Spotify */}
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: { xs: 'center', md: 'flex-start' }
-                }}>
-                    <Chip
-                        label="Play on Spotify"
-                        icon={
-                            <Box
-                                component="img"
-                                src={SpotifyLogo}
-                                alt="Spotify"
-                                sx={{
-                                    width: 21, // Spotify minimum required size
-                                    height: 21, // Spotify minimum required size
-                                    filter: 'brightness(0) invert(1)', // Makes the logo white
-                                }}
-                            />
-                        }
-                        onClick={() => track.external_urls?.spotify && window.open(track.external_urls.spotify, '_blank')}
-                        sx={{
-                            backgroundColor: '#1DB954',
-                            color: 'white',
-                            fontWeight: 600,
-                            borderRadius: 3,
-                            cursor: 'pointer',
-                            '&:hover': {
-                                backgroundColor: '#1ed760',
-                            },
-                            '& .MuiChip-icon': {
-                                color: 'white',
-                            },
-                        }}
-                    />
                 </Box>
             </Box>
         </Box>

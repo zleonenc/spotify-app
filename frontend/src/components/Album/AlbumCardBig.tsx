@@ -99,8 +99,8 @@ const AlbumCardBig = ({ albumId }: AlbumCardBigProps) => {
                 src={albumImage}
                 alt={album.name}
                 sx={{
-                    width: { xs: 200, md: 275 },
-                    height: { xs: 200, md: 275 },
+                    width: { xs: 200, md: 250 },
+                    height: { xs: 200, md: 250 },
                     borderRadius: {xs: 2, md: 4 }, // Required by Spotify
                     boxShadow: 3,
                     flexShrink: 0,

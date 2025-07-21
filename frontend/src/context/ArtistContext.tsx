@@ -9,7 +9,7 @@ import {
 
 import { useAuth } from './AuthContext';
 
-import apiClient from '../services/axios';
+import { artistService } from '../services';
 
 import type {
     Artist,
@@ -63,8 +63,8 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
             setArtistLoading(true);
             setArtistError(null);
 
-            const response = await apiClient.get(`/api/artists/${artistId}`);
-            setArtist(response.data);
+            const data = await artistService.getArtist(artistId);
+            setArtist(data);
         } catch (err: any) {
             console.error('Error fetching artist:', err);
 
@@ -91,8 +91,8 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
             setArtistAlbumsLoading(true);
             setArtistAlbumsError(null);
 
-            const response = await apiClient.get(`/api/artists/${artistId}/albums`);
-            setArtistAlbums(response.data);
+            const data = await artistService.getArtistAlbums(artistId);
+            setArtistAlbums(data);
         } catch (err: any) {
             console.error('Error fetching artist albums:', err);
             if (err.response?.status === 401) {
@@ -118,8 +118,8 @@ export const ArtistProvider = ({ children }: { children: ReactNode }) => {
             setArtistTopTracksLoading(true);
             setArtistTopTracksError(null);
 
-            const response = await apiClient.get(`/api/artists/${artistId}/top-tracks`);
-            setArtistTopTracks(response.data);
+            const data = await artistService.getArtistTopTracks(artistId);
+            setArtistTopTracks(data);
         } catch (err: any) {
             console.error('Error fetching artist top tracks:', err);
             if (err.response?.status === 401) {

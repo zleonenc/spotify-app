@@ -8,16 +8,14 @@ import {
     type ReactNode
 } from 'react';
 
-import apiClient from '../services/axios';
+import { profileService } from '../services';
 
 import { useAuth } from './AuthContext';
 
 import type {
     SpotifyProfile,
     Artist,
-    TopArtists,
-    Track,
-    TopTracks
+    Track
 } from '../types';
 
 interface ProfileContextType {
@@ -72,9 +70,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             setProfileLoading(true);
             setProfileError(null);
 
-            const response = await apiClient.get('/api/me/profile');
-
-            const data: SpotifyProfile = response.data;
+            const data = await profileService.getProfile();
             setProfile(data);
         } catch (err: any) {
             console.error('Error fetching profile:', err);
@@ -100,9 +96,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             setTopArtistsLoading(true);
             setTopArtistsError(null);
 
-            const response = await apiClient.get(`/api/me/top/artists?limit=${limit}`);
-
-            const data: TopArtists = response.data;
+            const data = await profileService.getTopArtists(limit);
             setTopArtists(data.items || []);
         } catch (err: any) {
             console.error('Error fetching top artists:', err);
@@ -128,9 +122,7 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
             setTopTracksLoading(true);
             setTopTracksError(null);
 
-            const response = await apiClient.get(`/api/me/top/tracks?limit=${limit}`);
-
-            const data: TopTracks = response.data;
+            const data = await profileService.getTopTracks(limit);
             setTopTracks(data.items || []);
         } catch (err: any) {
             console.error('Error fetching top tracks:', err);

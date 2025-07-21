@@ -12,6 +12,7 @@ import {
 
 import AlbumIcon from '@mui/icons-material/Album';
 
+import { usePlayer } from '../../context';
 import type { Track } from '../../types';
 
 interface ArtistTrackRowProps {
@@ -21,9 +22,10 @@ interface ArtistTrackRowProps {
 
 const ArtistTrackRow = ({ track, index }: ArtistTrackRowProps) => {
     const navigate = useNavigate();
+    const { playTrack } = usePlayer();
 
     const handleClick = () => {
-        navigate(`/track/${track.id}`);
+        playTrack(track.id);
     };
 
     const handleAlbumClick = (e: React.MouseEvent, albumId: string) => {

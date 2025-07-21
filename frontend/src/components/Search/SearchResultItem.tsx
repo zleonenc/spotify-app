@@ -6,6 +6,7 @@ import {
     Box
 } from '@mui/material';
 
+import { usePlayer } from '../../context';
 import type {
     Artist,
     Album,
@@ -21,6 +22,7 @@ interface SearchItemProps<T extends SearchItem> {
 
 const SearchItem = <T extends SearchItem>({ item, type }: SearchItemProps<T>) => {
     const navigate = useNavigate();
+    const { playTrack } = usePlayer();
 
     const handleClick = () => {
         if (type === 'artist') {
@@ -28,7 +30,7 @@ const SearchItem = <T extends SearchItem>({ item, type }: SearchItemProps<T>) =>
         } else if (type === 'album') {
             navigate(`/album/${item.id}`);
         } else if (type === 'track') {
-            navigate(`/track/${item.id}`);
+            playTrack(item.id);
         }
     };
 

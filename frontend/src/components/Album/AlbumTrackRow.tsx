@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
-
 import {
     TableRow,
     TableCell,
     Typography
 } from '@mui/material';
+
+import { usePlayer } from '../../context';
 
 import type { Track } from '../../types';
 
@@ -14,10 +14,10 @@ interface AlbumTrackRowProps {
 }
 
 const AlbumTrackRow = ({ track, index }: AlbumTrackRowProps) => {
-    const navigate = useNavigate();
+    const { playTrack } = usePlayer();
 
     const handleClick = () => {
-        navigate(`/track/${track.id}`);
+        playTrack(track.id);
     };
 
     const formatDuration = (durationMs: number) => {
