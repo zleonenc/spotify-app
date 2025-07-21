@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 
 import { useSearch } from '../context/SearchContext';
+
 import SearchCard from '../components/Search/SearchResultItem';
 
 const SearchPage = () => {
