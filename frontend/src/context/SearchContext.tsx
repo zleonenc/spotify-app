@@ -7,7 +7,7 @@ import {
     type ReactNode
 } from 'react';
 
-import apiClient from '../services/axios';
+import { searchService } from '../services';
 
 import { useAuth } from './AuthContext';
 
@@ -60,15 +60,8 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
             setSearchLoading(true);
             setSearchError(null);
 
-            const params = new URLSearchParams({
-                q: query,
-                type,
-                limit: limit.toString(),
-                offset: offset.toString()
-            });
-
-            const response = await apiClient.get(`/api/search?${params}`);
-            setSearchResults(response.data);
+            const data = await searchService.search(query, type, limit, offset);
+            setSearchResults(data);
         } catch (err: any) {
             console.error('Error searching:', err);
 

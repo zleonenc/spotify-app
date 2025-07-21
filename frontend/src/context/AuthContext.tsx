@@ -7,7 +7,7 @@ import {
     type ReactNode
 } from 'react';
 
-import apiClient from '../services/axios';
+import { authService } from '../services';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (userId) {
             try {
                 // Remove token from backend
-                await apiClient.delete('/api/auth/logout');
+                await authService.logout();
             } catch (error) {
                 console.error('Error during logout:', error);
             }

@@ -9,7 +9,7 @@ import {
 
 import { useAuth } from './AuthContext';
 
-import apiClient from '../services/axios';
+import { trackService } from '../services';
 
 import type { Track } from '../types';
 
@@ -41,8 +41,8 @@ export const TrackProvider = ({ children }: { children: ReactNode }) => {
             setTrackLoading(true);
             setTrackError(null);
 
-            const response = await apiClient.get(`/api/tracks/${trackId}`);
-            setTrack(response.data);
+            const data = await trackService.getTrack(trackId);
+            setTrack(data);
         } catch (err: any) {
             console.error('Error fetching track:', err);
 

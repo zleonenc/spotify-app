@@ -9,3 +9,5 @@ export { ArtistProvider, useArtist } from './ArtistContext';
 export { AlbumProvider, useAlbum } from './AlbumContext';
 
 export { TrackProvider, useTrack } from './TrackContext';
+
+export { PlayerProvider, usePlayer } from './PlayerContext';

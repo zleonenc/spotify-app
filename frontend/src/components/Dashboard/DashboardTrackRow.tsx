@@ -13,6 +13,7 @@ import {
 import AlbumIcon from '@mui/icons-material/Album';
 import PersonIcon from '@mui/icons-material/Person';
 
+import { usePlayer } from '../../context';
 import type { Track } from '../../types';
 
 interface DashboardTrackRowProps {
@@ -22,9 +23,10 @@ interface DashboardTrackRowProps {
 
 const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
     const navigate = useNavigate();
+    const { playTrack } = usePlayer();
 
     const handleClick = () => {
-        navigate(`/track/${track.id}`);
+        playTrack(track.id);
     };
 
     const handleAlbumClick = (e: React.MouseEvent, albumId: string) => {
@@ -135,7 +137,7 @@ const DashboardTrackRow = ({ track, index }: DashboardTrackRowProps) => {
                     {track.artists?.map((artist, index) => (
                         <Box key={artist.id || index} sx={{ display: 'flex', alignItems: 'center' }}>
                             <Chip
-                                icon ={<PersonIcon />}
+                                icon={<PersonIcon />}
                                 label={artist.name}
                                 variant="outlined"
                                 size="small"
