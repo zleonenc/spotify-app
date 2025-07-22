@@ -69,13 +69,13 @@ public class Album {
         private String href;
 
         @JsonProperty("limit")
-        private int limit;
+        private Integer limit;
 
         @JsonProperty("next")
         private String next;
 
         @JsonProperty("offset")
-        private int offset;
+        private Integer offset;
 
         @JsonProperty("previous")
         private String previous;

@@ -7,6 +7,7 @@ import com.example.spotify_app.config.RetryConfig;
 
 @Component
 public class RetryUtils {
+
     private final RetryConfig retryConfig;
 
     public RetryUtils(RetryConfig retryConfig) {
@@ -20,6 +21,10 @@ public class RetryUtils {
                 String retryAfterHeader = headers.getFirst("Retry-After");
                 if (retryAfterHeader != null && !retryAfterHeader.isEmpty()) {
                     long retryAfter = Long.parseLong(retryAfterHeader);
+                    if (retryAfter <= 0) {
+                        System.err.println("Negative Retry-After value: " + retryAfter);
+                        return retryConfig.getDefaultRetryDelaySeconds();
+                    }
                     return Math.min(retryAfter, retryConfig.getMaxRetryDelaySeconds());
                 }
             }

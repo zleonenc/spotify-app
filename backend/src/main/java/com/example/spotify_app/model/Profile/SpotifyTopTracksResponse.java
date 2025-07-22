@@ -19,10 +19,10 @@ public class SpotifyTopTracksResponse {
     private int total;
 
     @JsonProperty("limit")
-    private int limit;
+    private Integer limit;
 
     @JsonProperty("offset")
-    private int offset;
+    private Integer offset;
 
     @JsonProperty("href")
     private String href;

@@ -16,10 +16,10 @@ public class ArtistAlbumsResponse {
     private String href;
 
     @JsonProperty("limit")
-    private int limit;
+    private Integer limit;
 
     @JsonProperty("offset")
-    private int offset;
+    private Integer offset;
 
     @JsonProperty("previous")
     private String previous;
