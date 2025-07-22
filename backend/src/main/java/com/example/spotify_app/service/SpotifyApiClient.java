@@ -15,13 +15,13 @@ import com.example.spotify_app.util.RetryUtils;
 public class SpotifyApiClient {
     private final SpotifyConfig spotifyConfig;
     private final RetryConfig retryConfig;
-    private final TokenStore tokenStore;
     private final RetryUtils retryUtils;
+    private final TokenStore tokenStore;
     private final SpotifyOAuthService oauthService;
     private final RestClient restClient;
 
-    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, RetryConfig retryConfig, RetryUtils retryUtils,
-            SpotifyOAuthService oauthService) {
+    public SpotifyApiClient(TokenStore tokenStore, SpotifyConfig spotifyConfig, RetryConfig retryConfig,
+            RetryUtils retryUtils, SpotifyOAuthService oauthService) {
         this.spotifyConfig = spotifyConfig;
         this.retryConfig = retryConfig;
         this.retryUtils = retryUtils;
@@ -94,6 +94,10 @@ public class SpotifyApiClient {
 
         if (accessToken == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (apiEndpoint == null || apiEndpoint.isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
         }
 
         ResponseEntity<T> response = executeRequest(apiEndpoint, accessToken, responseType);

@@ -13,6 +13,7 @@ import com.example.spotify_app.config.SpotifyConfig;
 import com.example.spotify_app.config.RetryConfig;
 import com.example.spotify_app.model.SpotifyTokenResponse;
 import com.example.spotify_app.util.RetryUtils;
+import com.example.spotify_app.util.UserIdGenerator;
 
 @Service
 public class SpotifyOAuthService {
@@ -21,16 +22,13 @@ public class SpotifyOAuthService {
     private final RetryConfig retryConfig;
     private final RetryUtils retryUtils;
     private final TokenStore tokenStore;
-    private final UserIdGenerator userIdGenerator;
 
     public SpotifyOAuthService(SpotifyConfig spotifyConfig, RetryConfig retryConfig, RetryUtils retryUtils,
-            TokenStore tokenStore,
-            UserIdGenerator userIdGenerator) {
+            TokenStore tokenStore) {
         this.spotifyConfig = spotifyConfig;
         this.retryConfig = retryConfig;
         this.retryUtils = retryUtils;
         this.tokenStore = tokenStore;
-        this.userIdGenerator = userIdGenerator;
     }
 
     public String buildAuthorizationUrl() {
@@ -103,7 +101,7 @@ public class SpotifyOAuthService {
             SpotifyTokenResponse tokenResponse = requestTokenFromSpotify(requestBody);
 
             if (tokenResponse != null) {
-                String userId = userIdGenerator.generateUserId();
+                String userId = UserIdGenerator.generateUserId();
                 tokenStore.saveToken(userId, tokenResponse);
                 return userId;
             } else {

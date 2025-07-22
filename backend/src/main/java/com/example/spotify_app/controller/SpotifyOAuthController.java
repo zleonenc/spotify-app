@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import java.net.URI;
 
 import com.example.spotify_app.service.SpotifyOAuthService;
+import com.example.spotify_app.util.AuthUtils;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,11 +26,14 @@ public class SpotifyOAuthController {
 
     @GetMapping("/spotify")
     public ResponseEntity<Void> SpotifyOAuth() {
-        String authorizationUrl = oauthService.buildAuthorizationUrl();
-
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .location(URI.create(authorizationUrl))
-                .build();
+        try {
+            String authorizationUrl = oauthService.buildAuthorizationUrl();
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .location(URI.create(authorizationUrl))
+                    .build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/spotify/callback")
@@ -52,9 +56,24 @@ public class SpotifyOAuthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authorization) {
-        String userId = authorization.replace("Bearer ", "");
-        oauthService.logout(userId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authHeader) {
+
+        String userId;
+        try {
+            userId = AuthUtils.extractUserId(authHeader);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        try {
+            oauthService.logout(userId);
+            return ResponseEntity.ok().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

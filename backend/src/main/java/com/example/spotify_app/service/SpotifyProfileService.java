@@ -21,12 +21,12 @@ public class SpotifyProfileService {
         return tokenService.makeRequest(userId, endpoint, SpotifyProfileResponse.class);
     }
 
-    public ResponseEntity<SpotifyTopArtistsResponse> getTopArtists(String userId, int limit) {
+    public ResponseEntity<SpotifyTopArtistsResponse> getTopArtists(String userId, Integer limit) {
         String endpoint = String.format("/me/top/artists?limit=%d", limit);
         return tokenService.makeRequest(userId, endpoint, SpotifyTopArtistsResponse.class);
     }
 
-    public ResponseEntity<SpotifyTopTracksResponse> getTopTracks(String userId, int limit) {
+    public ResponseEntity<SpotifyTopTracksResponse> getTopTracks(String userId, Integer limit) {
         String endpoint = String.format("/me/top/tracks?limit=%d", limit);
         return tokenService.makeRequest(userId, endpoint, SpotifyTopTracksResponse.class);
     }
