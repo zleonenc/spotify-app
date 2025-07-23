@@ -34,10 +34,10 @@ const AppLogo = () => {
                 variant="h6"
                 sx={{
                     fontWeight: 700,
-                    color: 'primary.main'
+                    color: '#684697'
                 }}
             >
-                Spotify APP
+                Spotify App
             </Typography>
         </Box>
     );
