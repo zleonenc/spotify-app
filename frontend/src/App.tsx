@@ -1,35 +1,81 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
+} from 'react-router-dom'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Box } from '@mui/material'
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+import {
+    AuthProvider,
+    useAuth,
+    ProfileProvider,
+    SearchProvider,
+    PlayerProvider
+} from './context'
+
+import LoginPage from './pages/LoginPage'
+import DashboardPage from './pages/DashboardPage'
+import SearchPage from './pages/SearchPage'
+import AlbumPage from './pages/AlbumPage'
+import ArtistPage from './pages/ArtistPage'
+import AuthCallbackPage from './pages/AuthCallbackPage'
+
+import TopBar from './components/TopBar/TopBar'
+import SpotifyAttribution from './components/SpotifyAttribution/SpotifyAttribution'
+import StickyPlayer from './components/Player/StickyPlayer'
+
+function AppRoutes() {
+    const { isAuthenticated } = useAuth();
+
+    if (!isAuthenticated) {
+        return (
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+        );
+    }
+
+    return (
+        <Box sx={{
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <TopBar />
+            <Box sx={{ flex: 1, paddingBottom: '170px' }}> {/* Add padding for sticky player */}
+                <Routes>
+                    <Route path="/dashboard" element={<DashboardPage />} />
+                    <Route path="/search" element={<SearchPage />} />
+                    <Route path="/album/:id" element={<AlbumPage />} />
+                    <Route path="/artist/:id" element={<ArtistPage />} />
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Routes>
+            </Box>
+            <StickyPlayer />
+            <SpotifyAttribution />
+        </Box>
+    );
 }
 
-export default App
+function App() {
+    return (
+        <AuthProvider>
+            <ProfileProvider>
+                <SearchProvider>
+                    <PlayerProvider>
+                        <BrowserRouter>
+                            <AppRoutes />
+                        </BrowserRouter>
+                    </PlayerProvider>
+                </SearchProvider>
+            </ProfileProvider>
+        </AuthProvider>
+    );
+}
+
+export default App;
