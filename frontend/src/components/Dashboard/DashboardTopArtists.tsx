@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
+import TrendingUp from '@mui/icons-material/TrendingUp';
+
 import { useProfile } from '../../context';
 
 import ArtistCardSmall from '../Artist/ArtistCardSmall';
@@ -43,8 +45,8 @@ const DashboardTopArtists = () => {
         <Box sx={{
             mt: 4,
         }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-                My top artists
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
+                <TrendingUp sx={{ fontSize: 20 }} />  My top artists
             </Typography>
 
             {artists.length === 0 ? (

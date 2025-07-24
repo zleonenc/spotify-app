@@ -14,7 +14,10 @@ import {
     Paper
 } from '@mui/material';
 
-import { AccessTime } from '@mui/icons-material';
+import {
+    AccessTime,
+    TrendingUp
+} from '@mui/icons-material';
 
 import { useArtist } from '../../context';
 
@@ -55,13 +58,13 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
 
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-                Popular songs
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
+                <TrendingUp sx={{ fontSize: 20 }} /> Popular songs
             </Typography>
 
             {tracks.length === 0 ? (
                 <Box>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         No popular songs found
                     </Typography>
                 </Box>
@@ -85,8 +88,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 <TableCell
                                     align="center"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 60,
                                     }}
                                 >
@@ -94,8 +96,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 60,
                                     }}
                                 >
@@ -103,16 +104,14 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                     }}
                                 >
                                     Song Name
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 200,
                                     }}
                                 >
@@ -123,8 +122,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 <TableCell
                                     align="center"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 80,
                                     }}
                                 >
@@ -133,8 +131,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 <TableCell
                                     align="center"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 120,
                                     }}
                                 >
@@ -143,8 +140,7 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                                 <TableCell
                                     align="right"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 100,
                                     }}
                                 >

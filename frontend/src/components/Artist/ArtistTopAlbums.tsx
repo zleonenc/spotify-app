@@ -61,7 +61,7 @@ const ArtistTopAlbums = ({ artistId }: ArtistTopAlbumsProps) => {
 
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
                 Discography
             </Typography>
 

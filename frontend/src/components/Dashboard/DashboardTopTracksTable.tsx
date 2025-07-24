@@ -14,7 +14,10 @@ import {
     Paper
 } from '@mui/material';
 
-import { AccessTime } from '@mui/icons-material';
+import {
+    AccessTime,
+    TrendingUp
+} from '@mui/icons-material';
 
 import { useProfile } from '../../context';
 
@@ -49,8 +52,8 @@ const DashboardTopTracksTable = () => {
 
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
-                My top tracks
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
+                <TrendingUp sx={{ fontSize: 20 }} /> My top tracks
             </Typography>
 
             {tracks.length === 0 ? (
@@ -79,8 +82,7 @@ const DashboardTopTracksTable = () => {
                                 <TableCell
                                     align="center"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 60,
                                     }}
                                 >
@@ -88,32 +90,29 @@ const DashboardTopTracksTable = () => {
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,      
                                     }}
                                 >
                                     Image
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,    
                                     }}
                                 >
                                     Song Name
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800, 
                                     }}
                                 >
                                     Artist(s)
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
+                                        
                                         width: 200,
                                     }}
                                 >
@@ -122,8 +121,7 @@ const DashboardTopTracksTable = () => {
                                 <TableCell
                                     align="right"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 120,
                                     }}
                                 >

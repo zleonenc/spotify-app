@@ -20,11 +20,11 @@ import { useAlbum } from '../../context';
 
 import AlbumTrackRow from './AlbumTrackRow';
 
-interface AlbumTracksProps {
+interface AlbumTracksTableProps {
     albumId: string;
 }
 
-const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
+const AlbumTracksTable = ({ albumId }: AlbumTracksTableProps) => {
     const { album, albumLoading, albumError, fetchAlbum } = useAlbum();
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
 
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" component="h2" gutterBottom>
+            <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
                 Album songs
             </Typography>
 
@@ -78,13 +78,12 @@ const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
                             <TableRow sx={{
                                 bgcolor: 'grey.300',
                                 borderBottom: '2px solid',
-                                borderColor: 'divider',
+                                borderColor: 'divider'
                             }}>
                                 <TableCell
                                     align="center"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 60,
                                     }}
                                 >
@@ -92,8 +91,7 @@ const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
                                 </TableCell>
                                 <TableCell
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                     }}
                                 >
                                     Song Name
@@ -101,8 +99,7 @@ const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
                                 <TableCell
                                     align="right"
                                     sx={{
-                                        fontWeight: 600,
-                                        color: 'text.secondary',
+                                        fontWeight: 800,
                                         width: 120,
                                     }}
                                 >
@@ -126,4 +123,4 @@ const AlbumTracks = ({ albumId }: AlbumTracksProps) => {
     );
 };
 
-export default AlbumTracks;
+export default AlbumTracksTable;
