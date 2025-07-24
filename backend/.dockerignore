@@ -1,0 +1,22 @@
+# Ignore build output
+build/
+.gradle/
+out/
+
+# Ignore IDE/editor/project files
+*.iml
+.idea/
+.vscode/
+*.log
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml

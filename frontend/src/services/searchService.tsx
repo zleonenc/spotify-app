@@ -16,7 +16,7 @@ export const searchService = {
             offset: offset.toString()
         });
 
-        const response = await apiClient.get(`/api/search?${params}`);
+        const response = await apiClient.get(`/search?${params}`);
         return response.data;
     },
 };

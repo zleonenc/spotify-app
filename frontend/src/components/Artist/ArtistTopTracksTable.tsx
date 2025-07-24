@@ -77,7 +77,11 @@ const ArtistTopTracksTable = ({ artistId }: ArtistTopTracksProps) => {
                 >
                     <Table>
                         <TableHead>
-                            <TableRow sx={{ bgcolor: 'grey.50' }}>
+                            <TableRow sx={{
+                                bgcolor: 'grey.300',
+                                borderBottom: '2px solid',
+                                borderColor: 'divider',
+                            }}>
                                 <TableCell
                                     align="center"
                                     sx={{

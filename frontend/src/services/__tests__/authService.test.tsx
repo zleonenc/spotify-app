@@ -31,7 +31,7 @@ describe('authService', () => {
             await authService.logout();
 
             // Then
-            expect(mockDelete).toHaveBeenCalledWith('/api/auth/logout');
+            expect(mockDelete).toHaveBeenCalledWith('/auth/logout');
             expect(mockDelete).toHaveBeenCalledTimes(1);
         });
 
@@ -43,7 +43,7 @@ describe('authService', () => {
 
             // When & Then
             await expect(authService.logout()).rejects.toThrow('Network error');
-            expect(mockDelete).toHaveBeenCalledWith('/api/auth/logout');
+            expect(mockDelete).toHaveBeenCalledWith('/auth/logout');
         });
 
         it('logout THROWS and RETURNS unauthorizedError', async () => {
@@ -56,7 +56,7 @@ describe('authService', () => {
 
             // When & Then
             await expect(authService.logout()).rejects.toEqual(unauthorizedError);
-            expect(mockDelete).toHaveBeenCalledWith('/api/auth/logout');
+            expect(mockDelete).toHaveBeenCalledWith('/auth/logout');
         });
 
         it('logout THROWS and RETURNS serverError', async () => {
@@ -69,7 +69,7 @@ describe('authService', () => {
 
             // When & Then
             await expect(authService.logout()).rejects.toEqual(serverError);
-            expect(mockDelete).toHaveBeenCalledWith('/api/auth/logout');
+            expect(mockDelete).toHaveBeenCalledWith('/auth/logout');
         });
 
         it('logout THROWS and RETURNS networkError', async () => {
@@ -81,7 +81,7 @@ describe('authService', () => {
 
             // When & Then
             await expect(authService.logout()).rejects.toThrow('Network Error');
-            expect(mockDelete).toHaveBeenCalledWith('/api/auth/logout');
+            expect(mockDelete).toHaveBeenCalledWith('/auth/logout');
         });
     });
 });

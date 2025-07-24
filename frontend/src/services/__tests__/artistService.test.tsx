@@ -51,7 +51,7 @@ describe('artistService', () => {
 
             // Then
             expect(result).toEqual(mockArtist);
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1');
         });
 
         it('getArtist THROWS and RETURNS error', async () => {
@@ -63,7 +63,7 @@ describe('artistService', () => {
 
             // When & Then
             await expect(artistService.getArtist(artistId)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1');
         });
     });
 
@@ -81,7 +81,7 @@ describe('artistService', () => {
 
             // Then
             expect(result).toEqual(mockAlbums);
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1/albums');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1/albums');
         });
 
         it('getArtistAlbums THROWS and RETURNS error', async () => {
@@ -93,7 +93,7 @@ describe('artistService', () => {
 
             // When & Then
             await expect(artistService.getArtistAlbums(artistId)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1/albums');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1/albums');
         });
     });
 
@@ -111,7 +111,7 @@ describe('artistService', () => {
 
             // Then
             expect(result).toEqual(mockTopTracks);
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1/top-tracks');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1/top-tracks');
         });
 
         it('getArtistTopTracks THROWS and RETURNS error', async () => {
@@ -123,7 +123,7 @@ describe('artistService', () => {
 
             // When & Then
             await expect(artistService.getArtistTopTracks(artistId)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/artists/artist1/top-tracks');
+            expect(mockGet).toHaveBeenCalledWith('/artists/artist1/top-tracks');
         });
     });
 });

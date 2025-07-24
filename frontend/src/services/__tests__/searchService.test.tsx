@@ -39,7 +39,7 @@ describe('searchService', () => {
 
             // Then
             expect(result).toEqual(mockSearchResponse);
-            expect(mockGet).toHaveBeenCalledWith('/api/search?q=test&type=track&limit=20&offset=0');
+            expect(mockGet).toHaveBeenCalledWith('/search?q=test&type=track&limit=20&offset=0');
         });
 
         it('search THROWS and RETURNS error', async () => {
@@ -52,7 +52,7 @@ describe('searchService', () => {
 
             // When & Then
             await expect(searchService.search(query, type)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/search?q=test&type=track&limit=20&offset=0');
+            expect(mockGet).toHaveBeenCalledWith('/search?q=test&type=track&limit=20&offset=0');
         });
     });
 });

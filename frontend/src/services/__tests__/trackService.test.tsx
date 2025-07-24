@@ -77,7 +77,7 @@ describe('trackService', () => {
 
             // Then
             expect(result).toEqual(mockTrack);
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/track123');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/track123');
             expect(mockGet).toHaveBeenCalledTimes(1);
         });
 
@@ -90,7 +90,7 @@ describe('trackService', () => {
 
             // When & Then
             await expect(trackService.getTrack(trackId)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/track123');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/track123');
         });
 
         it('getTrack THROWS and RETURNS notFoundError', async () => {
@@ -104,7 +104,7 @@ describe('trackService', () => {
 
             // When & Then
             await expect(trackService.getTrack(trackId)).rejects.toEqual(notFoundError);
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/nonexistent-track');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/nonexistent-track');
         });
 
         it('getTrack THROWS and RETURNS unauthorizedError', async () => {
@@ -118,7 +118,7 @@ describe('trackService', () => {
 
             // When & Then
             await expect(trackService.getTrack(trackId)).rejects.toEqual(unauthorizedError);
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/track123');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/track123');
         });
 
         it('getTrack THROWS and RETURNS serverError', async () => {
@@ -132,7 +132,7 @@ describe('trackService', () => {
 
             // When & Then
             await expect(trackService.getTrack(trackId)).rejects.toEqual(serverError);
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/track123');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/track123');
         });
 
         it('getTrack THROWS and RETURNS networkError', async () => {
@@ -145,7 +145,7 @@ describe('trackService', () => {
 
             // When & Then
             await expect(trackService.getTrack(trackId)).rejects.toThrow('Network Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/tracks/track123');
+            expect(mockGet).toHaveBeenCalledWith('/tracks/track123');
         });
     });
 });

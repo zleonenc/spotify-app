@@ -39,7 +39,7 @@ describe('profileService', () => {
 
             // Then
             expect(result).toEqual(mockProfile);
-            expect(mockGet).toHaveBeenCalledWith('/api/me/profile');
+            expect(mockGet).toHaveBeenCalledWith('/me/profile');
         });
 
         it('getProfile THROWS and RETURNS error', async () => {
@@ -50,7 +50,7 @@ describe('profileService', () => {
 
             // When & Then
             await expect(profileService.getProfile()).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/me/profile');
+            expect(mockGet).toHaveBeenCalledWith('/me/profile');
         });
     });
 
@@ -67,7 +67,7 @@ describe('profileService', () => {
 
             // Then
             expect(result).toEqual(mockTopArtists);
-            expect(mockGet).toHaveBeenCalledWith('/api/me/top/artists?limit=20');
+            expect(mockGet).toHaveBeenCalledWith('/me/top/artists?limit=20');
         });
 
         it('getTopArtists THROWS and RETURNS error', async () => {
@@ -78,7 +78,7 @@ describe('profileService', () => {
 
             // When & Then
             await expect(profileService.getTopArtists()).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/me/top/artists?limit=20');
+            expect(mockGet).toHaveBeenCalledWith('/me/top/artists?limit=20');
         });
     });
 
@@ -95,7 +95,7 @@ describe('profileService', () => {
 
             // Then
             expect(result).toEqual(mockTopTracks);
-            expect(mockGet).toHaveBeenCalledWith('/api/me/top/tracks?limit=20');
+            expect(mockGet).toHaveBeenCalledWith('/me/top/tracks?limit=20');
         });
 
         it('getTopTracks THROWS and RETURNS error', async () => {
@@ -106,7 +106,7 @@ describe('profileService', () => {
 
             // When & Then
             await expect(profileService.getTopTracks()).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/me/top/tracks?limit=20');
+            expect(mockGet).toHaveBeenCalledWith('/me/top/tracks?limit=20');
         });
     });
 });

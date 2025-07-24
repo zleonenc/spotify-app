@@ -8,15 +8,15 @@ import type {
 
 export const profileService = {
     getProfile: async (): Promise<SpotifyProfile> => {
-        const response = await apiClient.get('/api/me/profile');
+        const response = await apiClient.get('/me/profile');
         return response.data;
     },
     getTopArtists: async (limit = 20): Promise<TopArtists> => {
-        const response = await apiClient.get(`/api/me/top/artists?limit=${limit}`);
+        const response = await apiClient.get(`/me/top/artists?limit=${limit}`);
         return response.data;
     },
     getTopTracks: async (limit = 20): Promise<TopTracks> => {
-        const response = await apiClient.get(`/api/me/top/tracks?limit=${limit}`);
+        const response = await apiClient.get(`/me/top/tracks?limit=${limit}`);
         return response.data;
     },
 };

@@ -48,7 +48,7 @@ describe('albumService', () => {
 
             // Then
             expect(result).toEqual(mockAlbum);
-            expect(mockGet).toHaveBeenCalledWith('/api/albums/album1');
+            expect(mockGet).toHaveBeenCalledWith('/albums/album1');
         });
 
         it('getAlbum THROWS and RETURNS error', async () => {
@@ -60,7 +60,7 @@ describe('albumService', () => {
 
             // When & Then
             await expect(albumService.getAlbum(albumId)).rejects.toThrow('API Error');
-            expect(mockGet).toHaveBeenCalledWith('/api/albums/album1');
+            expect(mockGet).toHaveBeenCalledWith('/albums/album1');
         });
     });
 });

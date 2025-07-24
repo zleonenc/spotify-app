@@ -43,7 +43,7 @@ const DashboardTopTracksTable = () => {
         );
     }
 
-    const maxTracksToShow = 5;
+    const maxTracksToShow = 8;
     const tracks = topTracks || [];
     const limitedTracks = tracks.slice(0, maxTracksToShow);
 
@@ -71,7 +71,11 @@ const DashboardTopTracksTable = () => {
                 >
                     <Table>
                         <TableHead>
-                            <TableRow sx={{ bgcolor: 'grey.50' }}>
+                            <TableRow sx={{
+                                bgcolor: 'grey.300',
+                                borderBottom: '2px solid',
+                                borderColor: 'divider',
+                            }}>
                                 <TableCell
                                     align="center"
                                     sx={{

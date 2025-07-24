@@ -3,14 +3,16 @@ FROM azul/zulu-openjdk-alpine:21-latest AS builder
 
 WORKDIR /app
 
-COPY gradlew .
-COPY gradle gradle
 COPY build.gradle .
 COPY settings.gradle .
-COPY src src
+COPY gradlew .
+COPY gradle gradle
 
 RUN chmod +x gradlew
-RUN ./gradlew build -x test
+RUN ./gradlew dependencies --no-daemon || return 0
+
+COPY src src
+RUN ./gradlew build -x test --no-daemon
 
 # Stage 2: Create the final, lean image using a JRE image
 FROM azul/zulu-openjdk-alpine:21-jre-latest

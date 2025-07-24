@@ -37,7 +37,7 @@ const AppLogo = () => {
                     color: '#684697'
                 }}
             >
-                Spotify App
+                Spark Music
             </Typography>
         </Box>
     );
