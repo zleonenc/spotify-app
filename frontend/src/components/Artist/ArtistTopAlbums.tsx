@@ -12,6 +12,10 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 
+import {
+    TrendingUp
+} from '@mui/icons-material';
+
 import { useArtist } from '../../context';
 
 import AlbumCardSmall from '../Album/AlbumCardSmall';
@@ -62,7 +66,7 @@ const ArtistTopAlbums = ({ artistId }: ArtistTopAlbumsProps) => {
     return (
         <Box sx={{ mt: 4 }}>
             <Typography variant="h4" component="h2" sx={{ fontWeight: 'bold' }} gutterBottom>
-                Discography
+                <TrendingUp sx={{ fontSize: 20 }} /> Popular albums
             </Typography>
 
             {albums.length === 0 ? (
