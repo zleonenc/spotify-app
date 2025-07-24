@@ -93,7 +93,7 @@ const LoginPage = () => {
                                             mb: 1
                                         }}
                                     >
-                                        Welcome to Spotify
+                                        Welcome to Spark Music
                                     </Typography>
                                     <Typography
                                         variant="body1"
