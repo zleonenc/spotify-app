@@ -1,4 +1,4 @@
-# Breakable Toy II: Spotofy API
+# Breakable Toy II: Spotify API
 
 ## 🚀 Overview
 
